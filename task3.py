@@ -16,9 +16,16 @@ from tabulate import tabulate
 from task2 import host_range_ping
 
 def host_range_ping_tab(first_ip, range_len: int):
+    '''
+    Определяет доступность диапазона ip-адресов.
+    Выводит на печать таблицу с доступными и недоступными адресами
+    Аргументы
+    first_ip - первый адрес
+    range_len - размер диапазона
+    '''
     availability_table = dict()
     availability_table['reachable'], availability_table['unreachable'] = host_range_ping(first_ip, range_len)
-    import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
     print(tabulate(availability_table, headers="keys", tablefmt='grid'))
 
 

@@ -9,6 +9,12 @@ import ipaddress
 from task1 import host_ping
 
 def host_range_ping(first_ip: str, range_len: int):
+    '''
+    Определяет доступность диапазона ip-адресов
+    Аргументы
+    first_ip - первый адрес
+    range_len - размер диапазона адресов
+    '''
     ip = ipaddress.ip_address(first_ip)
     ip_list = []
     # import pdb; pdb.set_trace()

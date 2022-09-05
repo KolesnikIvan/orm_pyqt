@@ -17,23 +17,12 @@ from threading import Thread
 import platform
 
 
-PING_TIMES = "2"
-
-def is_host(ip:str):
-    '''Проверка соответствия переданного адреса хосту (иначе сети)
-    '''
-    # import pdb; pdb.set_trace()
-    try:
-        ip = ipaddress.ip_address(ip)
-        ipaddress.ip_network(ip)
-        return False
-    except Exception:
-        return True
+PING_TIMES = "2"  # сколько раз пинговать
 
 
 def ping_one(ip, av: dict, nav: dict):
     '''
-    обращается к отдельному ip-адресу
+    определяет доступность отдельного ip-адреса
     '''
     # import pdb; pdb.set_trace()
     # if is_host(ip):
@@ -52,6 +41,7 @@ def ping_one(ip, av: dict, nav: dict):
         print(e)
 
 def host_ping(ip_list: list = []):
+    '''ОПределяет доступность списка ip-адресов'''
     available_ips = dict()
     notavailable_ips = dict()
     for ip in ip_list:
@@ -61,12 +51,6 @@ def host_ping(ip_list: list = []):
     return available_ips, notavailable_ips
 
 
-# from concurrent.futures import ThreadPoolExecutor
-# def ping_list(ip_list:list):
-#     with ThreadPoolExecutor(max_workers=round(len(list)/2,0)) as executor:
-#         result = executor(map(ping_one), ip_list)
-#         return result
-
 if __name__ == '__main__':
     ip_list = ['192.168.0.1', '172.168.0.1', '80.0.1.0',\
         'google.com', 'yandex.ru', 'ya.ru',\
@@ -74,3 +58,24 @@ if __name__ == '__main__':
     av, nav = host_ping(ip_list)
     print(av)
     print(nav)
+
+# ______________________________________________________________________
+# ниже наброски
+# def is_host(ip:str):
+#     '''
+#     Проверка соответствия переданного адреса хосту (иначе сети)
+#     аргумент - ip
+#     '''
+#     # import pdb; pdb.set_trace()
+#     try:
+#         ip = ipaddress.ip_address(ip)
+#         ipaddress.ip_network(ip)
+#         return False
+#     except Exception:
+#         return True
+
+# from concurrent.futures import ThreadPoolExecutor
+# def ping_list(ip_list:list):
+#     with ThreadPoolExecutor(max_workers=round(len(list)/2,0)) as executor:
+#         result = executor(map(ping_one), ip_list)
+#         return result
