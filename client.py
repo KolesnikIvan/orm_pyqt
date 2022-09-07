@@ -180,7 +180,7 @@ def main():
         client_socket.connect((server_address, server_port))
         message_presence = create_presence(client_name)  # {'action': 'presence', 'time': 111, 'user': {account_name'}}
         send_message(client_socket, message_presence)
-        import pdb; pdb.set_trace()
+        # import pdb; pdb.set_trace()
         answer = process_presns_answ(get_message(client_socket))
         cl_logger.info(f'Установлено соединение с сервером {answer}')
     
