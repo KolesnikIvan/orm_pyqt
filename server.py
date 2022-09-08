@@ -25,9 +25,11 @@ from logs.config_log_server import srv_logger
 from decos import log_function, Log_class
 from select import select
 import time
+from metaclasses import ServerVerifier
+from descriptors import Port
 
-
-class Server:
+class Server(metaclass=ServerVerifier):
+    port = Port()
     def __init__(self, listen_address, listen_ports):
         self.ip = listen_address
         self.port = listen_ports

@@ -23,10 +23,10 @@ from logs.config_log_client import cl_logger
 from decos import Log_class, log_function
 from errors import IncorrectDataReceived, NonDictInputError, ServerError, MissingReqField
 from threading import Thread
+from metaclasses import ClientVerifier
 
-
-class ClientSender(Thread):
-    '''class sends messages to server and interacts with a user'''
+class ClientSender(Thread, metaclass=ClientVerifier):
+    # class sends messages to server and interacts with a user
     def __init__(self, account_name, client_sock):
         self.account_name = account_name
         self.sock = client_sock
@@ -48,8 +48,8 @@ class ClientSender(Thread):
         '''
         # import pdb; pdb.set_trace()
         send_to = input('введите адресата сообщения ')
-        message = input('Введите сообщение или x для завершения работы. ')
-        if message == 'x' or send_to == 'x':
+        message = input('Введите сообщение или exit для завершения работы. ')
+        if message == 'exit' or send_to == 'exit':
             self.sock.close()
             cl_logger.info("Клиент получил команду завершения")
             sys.exit(0)
@@ -99,7 +99,7 @@ class ClientSender(Thread):
         print('exit выйти')
 
 
-class ClientReader(Thread):
+class ClientReader(Thread, metaclass=ClientVerifier):
     '''class receives messages from server'''
     def __init__(self, account_name, client_sock):
         self.account_name = account_name
@@ -180,8 +180,9 @@ def main():
         client_socket.connect((server_address, server_port))
         message_presence = create_presence(client_name)  # {'action': 'presence', 'time': 111, 'user': {account_name'}}
         send_message(client_socket, message_presence)
-        import pdb; pdb.set_trace()
-        answer = process_presns_answ(get_message(client_socket))
+        # import pdb; pdb.set_trace()
+        ans = get_message(client_socket)
+        answer = process_presns_answ(ans)
         cl_logger.info(f'Установлено соединение с сервером {answer}')
     
     except (ValueError, json.JSONDecodeError) as e:
@@ -199,11 +200,11 @@ def main():
     else:
         # Запуск потоков приема и тправки
         receiver = ClientReader(client_name, client_socket)  # Thread(target=proc_msg_from_srv, args=(client_socket, client_name), daemon=True)
-        # receiver.daemon = True
+        receiver.daemon = True
         receiver.start()  # запуск потока приема сообщений
 
         sender = ClientSender(client_name, client_socket)  # user_cli = Thread(target=user_interaction, args=(client_socket, client_name), daemon=True)
-        # sender.daemon = True
+        sender.daemon = True
         sender.start()  # запуск потока отправки сообщений # user_cli.start()
         cl_logger.info('запущены потоки обработки и отправки сообщений')
         

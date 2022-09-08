@@ -8,7 +8,7 @@ while True:
         break
     elif ANSWER == 's':
         PROCESSES.append(subprocess.Popen('python server.py', creationflags=subprocess.CREATE_NEW_CONSOLE))
-        # import pdb; pdb.set_trace()
+        import pdb; pdb.set_trace()
 
         for i in range(3):
             PROCESSES.append(subprocess.Popen(f'python client.py -n test{i+1}', creationflags=subprocess.CREATE_NEW_CONSOLE))
