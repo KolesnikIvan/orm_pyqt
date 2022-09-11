@@ -1,33 +1,19 @@
-2022-09-08 09:29:14,376-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:14,380-INFO-82-клиент <socket.socket fd=488, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 58274)> отключился
-2022-09-08 09:29:15,391-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:16,395-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:17,410-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:18,426-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:19,442-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:20,457-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:21,461-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:22,476-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:23,490-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:24,507-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:25,521-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:26,522-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:27,534-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:28,549-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:29,551-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:30,556-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:31,569-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:32,581-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:33,584-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:34,598-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:35,605-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:36,619-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:37,624-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:38,628-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:39,640-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:40,656-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:41,664-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:42,666-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:43,678-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:44,682-ERROR-59-ошибка timed out на сервере
-2022-09-08 09:29:45,689-ERROR-59-ошибка timed out на сервере
+2022-09-10 23:19:52,654-INFO-179-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, None).
+2022-09-10 23:19:52,716-INFO-52-Сервер запущен по адресу 127.0.0.1:7777
+2022-09-10 23:20:10,482-INFO-179-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, None).
+2022-09-10 23:20:10,518-INFO-52-Сервер запущен по адресу 127.0.0.1:7777
+2022-09-10 23:20:10,616-INFO-68-установлено соединение с клиентом ('127.0.0.1', 62396)
+2022-09-10 23:20:10,710-INFO-68-установлено соединение с клиентом ('127.0.0.1', 62397)
+2022-09-10 23:20:10,725-INFO-86-Из модуля common.utils функцией run вызвана функция get_message((<socket.socket fd=332, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 62396)>,),{})={'action': 'presence', 'time': 'Sat Sep 10 23:20:10 2022', 'user': {'account_name': 'test3'}}.
+2022-09-10 23:20:10,729-INFO-120-разбор сообщения {'action': 'presence', 'time': 'Sat Sep 10 23:20:10 2022', 'user': {'account_name': 'test3'}} от клиента <socket.socket fd=332, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 62396)>
+2022-09-10 23:20:10,778-INFO-134-Получено корректное сообщение от клиента, сформирован ответ 200
+2022-09-10 23:20:10,979-INFO-68-установлено соединение с клиентом ('127.0.0.1', 62395)
+2022-09-10 23:20:10,985-INFO-86-Из модуля common.utils функцией run вызвана функция get_message((<socket.socket fd=684, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 62397)>,),{})={'action': 'presence', 'time': 'Sat Sep 10 23:20:10 2022', 'user': {'account_name': 'test2'}}.
+2022-09-10 23:20:10,989-INFO-120-разбор сообщения {'action': 'presence', 'time': 'Sat Sep 10 23:20:10 2022', 'user': {'account_name': 'test2'}} от клиента <socket.socket fd=684, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 62397)>
+2022-09-10 23:20:11,041-INFO-134-Получено корректное сообщение от клиента, сформирован ответ 200
+2022-09-10 23:20:12,058-INFO-86-Из модуля common.utils функцией run вызвана функция get_message((<socket.socket fd=444, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 62395)>,),{})={'action': 'presence', 'time': 'Sat Sep 10 23:20:10 2022', 'user': {'account_name': 'test1'}}.
+2022-09-10 23:20:12,059-INFO-120-разбор сообщения {'action': 'presence', 'time': 'Sat Sep 10 23:20:10 2022', 'user': {'account_name': 'test1'}} от клиента <socket.socket fd=444, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 62395)>
+2022-09-10 23:20:12,086-INFO-134-Получено корректное сообщение от клиента, сформирован ответ 200
+2022-09-10 23:20:32,242-INFO-86-Из модуля common.utils функцией run вызвана функция get_message((<socket.socket fd=444, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 62395)>,),{})={'action': 'message', 'sender': 'test1', 'to': 'test2', 'time': 'Sat Sep 10 23:20:31 2022', 'message_text': 'hello you test2'}.
+2022-09-10 23:20:32,244-INFO-120-разбор сообщения {'action': 'message', 'sender': 'test1', 'to': 'test2', 'time': 'Sat Sep 10 23:20:31 2022', 'message_text': 'hello you test2'} от клиента <socket.socket fd=444, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 62395)>
+2022-09-10 23:20:32,250-INFO-109-отправлено сообщение hello you test2 от пользователя test1 пользователю test2

@@ -27,25 +27,31 @@ from select import select
 import time
 from metaclasses import ServerVerifier
 from descriptors import Port
+from threading import Thread
+from srv_db import ServerStorage
 
-class Server(metaclass=ServerVerifier):
+
+class Server(Thread, metaclass=ServerVerifier):
     port = Port()
-    def __init__(self, listen_address, listen_ports):
+    def __init__(self, listen_address, listen_port, database):
         self.ip = listen_address
-        self.port = listen_ports
-        self.clients = []        # список активных клиентов
-        self.msgs_to_send = []  # список сообщений
-        self.names = dict()      # словарь {имя: клиент-сокет}
+        self.port = listen_port
+        self.clients = []           # список активных клиентов
+        self.msgs_to_send = []      # список сообщений
+        self.names = dict()         # словарь {имя: клиент-сокет}
+        self.db = database          # lesson3 server database
+        super().__init__()
 
     def init_socket(self):
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         server_socket.bind((self.ip, self.port))
         server_socket.settimeout(1)
         self.sock = server_socket
         self.sock.listen(MAX_CONNECTIONS)    # связывание сокета с портом
         srv_logger.info(f'Сервер запущен по адресу {self.ip}:{self.port}')
 
-    def main(self):
+    def run(self):
         ''' Создает сокет на стороне сервера на хосте и порте из командной строки.'''
         # import pdb; pdb.set_trace()
         self.init_socket()
@@ -56,7 +62,7 @@ class Server(metaclass=ServerVerifier):
                 srv_logger.error('Сообщение от клиента некорректно')
                 sys.exit(1)
             except OSError as e:
-                srv_logger.error(f'ошибка {e} на сервере')
+                # srv_logger.error(f'ошибка {e} на сервере')
                 pass
             else:
                 srv_logger.info(f'установлено соединение с клиентом {client_address}')
@@ -64,7 +70,7 @@ class Server(metaclass=ServerVerifier):
             socks_to_receive = []
             socks_to_answer = []
             err = []
-            try:
+            try:  # проверка наличия клиентов
                 if self.clients:
                     socks_to_receive, socks_to_answer, err = select(self.clients, self.clients, [], 0)
                     print('read', socks_to_receive)
@@ -119,29 +125,34 @@ class Server(metaclass=ServerVerifier):
         and TIME in message\
         and USER in message:
             if message[USER][ACCOUNT_NAME] not in self.names.keys():
-                # если клиент обратился впервые, внести его в names и ответить 200:ok
+                # если клиент впервые, внести в names, в базу, ответить 200:ok
                 self.names[message[USER][ACCOUNT_NAME]] = client_sock
+                client_ip, client_port = client_sock.getpeername()  # L3
+                self.db.user_login(message[USER][ACCOUNT_NAME], client_ip, client_port)
                 # import pdb; pdb.set_trace()
                 send_message(client_sock, RESPONSE_200)
                 srv_logger.info('Получено корректное сообщение от клиента, сформирован ответ 200')
             else:
                 response = RESPONSE_400
-                response[ERROR] = 'клиент с таким именем уже находится на связи'
-                srv_logger.error('Получено некорректное сообщение от клиента')
+                response[ERROR] = 'клиент с таким именем зарегистрирован'
                 send_message(client_sock, response)
+                srv_logger.error('Получено некорректное сообщение от клиента')
+                self.clients.remove(client_sock)    # L3
+                client_sock.close()
             return
-        # если целевое сообщение, то внести в список сообщений, не отвечать
+       
         elif ACTION in message\
         and message[ACTION] == MESSAGE\
         and TIME in message\
         and MESSAGE_TEXT in message\
         and SENDER in message\
-        and DESTINATION in message:
+        and DESTINATION in message:  # если целевое сообщение, то внести в список сообщений, не отвечать
             self.msgs_to_send.append(message)
             return
         elif ACTION in message\
         and message[ACTION] == EXIT\
-        and ACCOUNT_NAME in message:
+        and ACCOUNT_NAME in message:  # client disconnects
+            self.db.user_logount(message[ACCOUNT_NAME]) # L3
             self.clients.remove(self.names[message[ACCOUNT_NAME]])
             self.names[message[ACCOUNT_NAME]].close()
             del self.names[message[ACCOUNT_NAME]]
@@ -153,12 +164,58 @@ class Server(metaclass=ServerVerifier):
             send_message(client_sock, response)
             return 
 
+
+def list_available_commands():
+    '''выводит список доступных команд'''
+    print('список supported commands')
+    print('users - list users')
+    print('connected - list active users')
+    print('loghist - история входов пользователя')
+    print('exit завершение работы сервера')
+    print('help список команд')
+    
 def main():
     '''получение хоста и порта из командной строки'''    
     listen_address, listen_port, _ = arg_parser()
     # создание экземпляра сервер
-    server = Server(listen_address, listen_port)
-    server.main()
+    db = ServerStorage()  # database initialize
+    server = Server(listen_address, listen_port, db)
+    server.daemon = True
+    server.start()  # L3
     
+    list_available_commands()   # print help
+    while True:
+        command = input('Введите команду: ')
+        if command == 'help':
+            list_available_commands()
+        elif command == 'exit':
+            break
+        elif command == 'users':
+            all_users = sorted(db.users_list())
+            if all_users:
+                for user in all_users:
+                    print(
+                        f'пользователь {user[0]} заходил {user[1]} '
+                        f'время установки соединения {user[3]}'
+                        )
+            else:
+                print('No data')
+        elif command == 'loghist':
+            name = input('историю какого пользователя смотреть? Enter дл вывода всех историй')
+            history = sorted(db.login_history(name))
+            if history:
+                for user in sorted(db.login_history(name)):
+                    print(
+                        f'пользователь {user[0]} заходил {user[1]} '
+                        f'время установки соединения {user[3]}'
+                        f'вход с {user[2]}:{user[3]}'
+                        )
+            else:
+                print('no data')
+        else:
+            print('непонятная команда {command} не поддерживается')
+
+
 if __name__ == '__main__':
+    # import pdb; pdb.set_trace()
     main()

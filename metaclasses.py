@@ -60,7 +60,7 @@ class ClientVerifier(type):
         # 'run': <function log_function.<locals>.log_fname at 0x000001E8148B0160>}
         methods = []  # методы. используемые в клиентском классе
         attrs = []
-        import pdb; pdb.set_trace()
+        # import pdb; pdb.set_trace()
         for func in clsdict:
             try:
                 ret = dis.get_instructions(clsdict[func])

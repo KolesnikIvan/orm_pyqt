@@ -1259,3 +1259,372 @@
 2022-09-08 09:29:13,702-16312-Thread-1-Из модуля __main__ функцией self._bootstrap_inner() вызвана функция run((<ClientReader(Thread-1, started daemon 16312)>,), {}) = None.
 2022-09-08 09:29:14,281-1288-MainThread-клиент прекратил работу
 2022-09-08 09:29:14,283-1288-MainThread-Клиент запущен в режиме main-скрипта
+2022-09-10 12:22:42,749-1884-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 12:22:42,752-1884-MainThread-запущен клиент по имени test1
+2022-09-10 12:22:44,796-1884-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 12:24:05,101-14296-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 12:24:05,107-14296-MainThread-запущен клиент по имени test1
+2022-09-10 12:24:07,154-14296-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 17:45:50,201-5760-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 17:45:50,203-5760-MainThread-запущен клиент по имени test1
+2022-09-10 17:45:50,217-9356-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test2').
+2022-09-10 17:45:50,219-9356-MainThread-запущен клиент по имени test2
+2022-09-10 17:45:50,221-10212-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test3').
+2022-09-10 17:45:50,226-10212-MainThread-запущен клиент по имени test3
+2022-09-10 17:45:52,251-9356-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 17:45:52,266-10212-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 17:48:38,715-18244-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test2').
+2022-09-10 17:48:38,719-18244-MainThread-запущен клиент по имени test2
+2022-09-10 17:48:38,763-20320-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 17:48:38,764-20320-MainThread-запущен клиент по имени test1
+2022-09-10 17:48:38,776-16468-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test3').
+2022-09-10 17:48:38,778-16468-MainThread-запущен клиент по имени test3
+2022-09-10 17:48:40,775-18244-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 17:48:40,807-20320-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 17:48:40,838-16468-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 17:50:46,922-7972-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 17:50:46,924-7972-MainThread-запущен клиент по имени test1
+2022-09-10 17:50:48,967-7972-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 17:52:46,522-16348-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test3').
+2022-09-10 17:52:46,530-16348-MainThread-запущен клиент по имени test3
+2022-09-10 17:52:46,629-11440-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 17:52:46,631-11440-MainThread-запущен клиент по имени test1
+2022-09-10 17:52:46,646-9152-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test2').
+2022-09-10 17:52:46,648-9152-MainThread-запущен клиент по имени test2
+2022-09-10 17:52:48,566-16348-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 17:52:48,676-11440-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 17:52:48,692-9152-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 17:55:53,881-19476-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 17:55:53,883-19476-MainThread-запущен клиент по имени test1
+2022-09-10 17:55:55,936-19476-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 17:59:45,495-10212-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test3').
+2022-09-10 17:59:45,500-10212-MainThread-запущен клиент по имени test3
+2022-09-10 17:59:45,562-5304-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test2').
+2022-09-10 17:59:45,571-5304-MainThread-запущен клиент по имени test2
+2022-09-10 17:59:45,593-7820-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 17:59:45,595-7820-MainThread-запущен клиент по имени test1
+2022-09-10 17:59:47,511-10212-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 17:59:47,591-5304-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 17:59:47,622-7820-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 18:03:31,801-4700-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test2').
+2022-09-10 18:03:31,809-4700-MainThread-запущен клиент по имени test2
+2022-09-10 18:03:32,690-10212-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test3').
+2022-09-10 18:03:32,693-10212-MainThread-запущен клиент по имени test3
+2022-09-10 18:03:32,748-3928-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 18:03:32,751-3928-MainThread-запущен клиент по имени test1
+2022-09-10 18:03:33,832-4700-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 18:03:34,722-10212-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 18:03:34,784-3928-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 21:47:06,148-15468-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test3').
+2022-09-10 21:47:06,151-15468-MainThread-запущен клиент по имени test3
+2022-09-10 21:47:06,160-16380-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test2').
+2022-09-10 21:47:06,162-16380-MainThread-запущен клиент по имени test2
+2022-09-10 21:47:06,166-4508-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 21:47:06,170-4508-MainThread-запущен клиент по имени test1
+2022-09-10 21:47:08,184-16380-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 21:47:08,184-15468-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 21:47:08,200-4508-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 21:52:46,283-18904-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test3').
+2022-09-10 21:52:46,286-18904-MainThread-запущен клиент по имени test3
+2022-09-10 21:52:46,303-13180-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 21:52:46,306-13180-MainThread-запущен клиент по имени test1
+2022-09-10 21:52:48,325-18904-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 21:52:48,340-13180-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 21:53:01,857-18764-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test2').
+2022-09-10 21:53:01,861-18764-MainThread-запущен клиент по имени test2
+2022-09-10 21:53:03,887-18764-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 21:53:59,428-18376-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test2').
+2022-09-10 21:53:59,432-18376-MainThread-запущен клиент по имени test2
+2022-09-10 21:53:59,441-19612-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test3').
+2022-09-10 21:53:59,444-19612-MainThread-запущен клиент по имени test3
+ вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 21:53:59,449-9660-MainThread-запущен клиент по имени test1
+2022-09-10 21:54:01,461-18376-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 21:54:01,476-9660-MainThread-не удалось подключиться к 127.0.0.1:7777
+
+2022-09-10 21:59:47,020-11416-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'tester1').
+2022-09-10 21:59:47,023-11416-MainThread-запущен клиент по имени tester1
+2022-09-10 21:59:47,028-11416-MainThread-Сформировано presence-сообщение
+2022-09-10 21:59:47,029-11416-MainThread-Из модуля __main__ функцией main() вызвана функция create_presence(('tester1',), {}) = {'action': 'presence', 'time': 'Sat Sep 10 21:59:47 2022', 'user': {'account_name': 'tester1'}}.
+2022-09-10 21:59:47,031-11416-MainThread-Из модуля common.utils функцией main() вызвана функция send_message((<socket.socket fd=480, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 62181), raddr=('127.0.0.1', 7777)>, {'action': 'presence', 'time': 'Sat Sep 10 21:59:47 2022', 'user': {'account_name': 'tester1'}}), {}) = None.
+2022-09-10 22:01:37,882-20644-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'testirov').
+2022-09-10 22:01:37,883-20644-MainThread-запущен клиент по имени testirov
+2022-09-10 22:01:37,885-20644-MainThread-Сформировано presence-сообщение
+2022-09-10 22:01:37,886-20644-MainThread-Из модуля __main__ функцией main() вызвана функция create_presence(('testirov',), {}) = {'action': 'presence', 'time': 'Sat Sep 10 22:01:37 2022', 'user': {'account_name': 'testirov'}}.
+2022-09-10 22:01:37,887-20644-MainThread-Из модуля common.utils функцией main() вызвана функция send_message((<socket.socket fd=184, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 62182), raddr=('127.0.0.1', 7777)>, {'action': 'presence', 'time': 'Sat Sep 10 22:01:37 2022', 'user': {'account_name': 'testirov'}}), {}) = None.
+2022-09-10 22:02:09,431-20644-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 22:35:39,688-6212-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'testerrr').
+2022-09-10 22:35:39,690-6212-MainThread-запущен клиент по имени testerrr
+2022-09-10 22:35:39,692-6212-MainThread-Сформировано presence-сообщение
+2022-09-10 22:35:39,693-6212-MainThread-Из модуля __main__ функцией main() вызвана функция create_presence(('testerrr',), {}) = {'action': 'presence', 'time': 'Sat Sep 10 22:35:39 2022', 'user': {'account_name': 'testerrr'}}.
+2022-09-10 22:35:39,695-6212-MainThread-Из модуля common.utils функцией main() вызвана функция send_message((<socket.socket fd=500, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 62237), raddr=('127.0.0.1', 7777)>, {'action': 'presence', 'time': 'Sat Sep 10 22:35:39 2022', 'user': {'account_name': 'testerrr'}}), {}) = None.
+2022-09-10 22:36:55,354-6212-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 22:43:39,610-11328-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test2').
+2022-09-10 22:43:39,616-11328-MainThread-запущен клиент по имени test2
+2022-09-10 22:43:39,691-14796-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 22:43:39,692-3428-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test3').
+2022-09-10 22:43:39,694-14796-MainThread-запущен клиент по имени test1
+2022-09-10 22:43:39,701-3428-MainThread-запущен клиент по имени test3
+2022-09-10 22:43:41,650-11328-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 22:43:41,730-3428-MainThread-не удалось подключиться к 127.0.0.1:7777
+
+2022-09-10 22:43:55,383-20392-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test2').
+2022-09-10 22:43:55,390-20392-MainThread-запущен клиент по имени test2
+2022-09-10 22:43:55,425-21148-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test3').
+2022-09-10 22:43:55,431-21148-MainThread-запущен клиент по имени test3
+2022-09-10 22:43:55,461-16000-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 22:43:55,463-16000-MainThread-запущен клиент по имени test1
+2022-09-10 22:43:57,424-20392-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 22:43:57,470-21148-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 22:43:57,502-16000-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 22:47:19,154-16404-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test2').
+2022-09-10 22:47:19,157-16404-MainThread-запущен клиент по имени test2
+2022-09-10 22:47:19,222-13644-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 22:47:19,224-13644-MainThread-запущен клиент по имени test1
+2022-09-10 22:47:19,233-10056-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test3').
+2022-09-10 22:47:19,236-10056-MainThread-запущен клиент по имени test3
+2022-09-10 22:47:21,189-16404-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 22:47:21,252-13644-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 22:47:21,284-10056-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 22:57:40,676-15092-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 22:57:40,681-15092-MainThread-запущен клиент по имени test1
+2022-09-10 22:57:40,692-7044-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test2').
+2022-09-10 22:57:40,693-9936-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test3').
+2022-09-10 22:57:40,697-7044-MainThread-запущен клиент по имени test2
+2022-09-10 22:57:40,705-9936-MainThread-запущен клиент по имени test3
+2022-09-10 22:57:42,711-15092-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 22:57:42,742-7044-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 22:57:46,019-3452-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test2').
+2022-09-10 22:57:46,020-3452-MainThread-запущен клиент по имени test2
+2022-09-10 22:57:46,029-3504-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 22:57:46,031-3504-MainThread-запущен клиент по имени test1
+2022-09-10 22:57:46,033-5192-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test3').
+2022-09-10 22:57:46,037-5192-MainThread-запущен клиент по имени test3
+2022-09-10 22:57:48,068-3452-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 22:57:48,091-5192-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 22:58:17,782-4652-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 22:58:17,788-4652-MainThread-запущен клиент по имени test1
+2022-09-10 22:58:17,822-20448-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test3').
+2022-09-10 22:58:17,824-20448-MainThread-запущен клиент по имени test3
+2022-09-10 22:58:17,828-20224-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test2').
+2022-09-10 22:58:17,832-20224-MainThread-запущен клиент по имени test2
+2022-09-10 22:58:19,821-4652-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 22:58:19,868-20224-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 22:58:48,796-21032-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test2').
+2022-09-10 22:58:48,805-21032-MainThread-запущен клиент по имени test2
+2022-09-10 22:58:48,835-1716-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 22:58:48,838-1716-MainThread-запущен клиент по имени test1
+2022-09-10 22:58:48,844-12948-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test3').
+2022-09-10 22:58:48,845-12948-MainThread-запущен клиент по имени test3
+2022-09-10 22:58:50,858-21032-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 22:58:50,889-1716-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 22:58:50,905-12948-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 22:59:34,527-9280-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test2').
+2022-09-10 22:59:34,534-9280-MainThread-запущен клиент по имени test2
+2022-09-10 22:59:34,607-7528-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 22:59:34,609-7528-MainThread-запущен клиент по имени test1
+2022-09-10 22:59:34,611-15952-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test3').
+2022-09-10 22:59:34,615-15952-MainThread-запущен клиент по имени test3
+2022-09-10 22:59:36,561-9280-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 22:59:36,639-15952-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 23:00:08,599-16120-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 23:00:08,601-16120-MainThread-запущен клиент по имени test1
+2022-09-10 23:00:10,643-16120-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 23:01:32,859-15560-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test3').
+2022-09-10 23:01:32,861-15560-MainThread-запущен клиент по имени test3
+2022-09-10 23:01:32,865-15560-MainThread-Сформировано presence-сообщение
+2022-09-10 23:01:32,865-15560-MainThread-Из модуля __main__ функцией main() вызвана функция create_presence(('test3',), {}) = {'action': 'presence', 'time': 'Sat Sep 10 23:01:32 2022', 'user': {'account_name': 'test3'}}.
+2022-09-10 23:01:32,868-15560-MainThread-Из модуля common.utils функцией main() вызвана функция send_message((<socket.socket fd=460, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 62317), raddr=('127.0.0.1', 7777)>, {'action': 'presence', 'time': 'Sat Sep 10 23:01:32 2022', 'user': {'account_name': 'test3'}}), {}) = None.
+2022-09-10 23:01:32,887-16336-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 23:01:32,895-16336-MainThread-запущен клиент по имени test1
+2022-09-10 23:01:32,896-16336-MainThread-Сформировано presence-сообщение
+2022-09-10 23:01:32,897-16336-MainThread-Из модуля __main__ функцией main() вызвана функция create_presence(('test1',), {}) = {'action': 'presence', 'time': 'Sat Sep 10 23:01:32 2022', 'user': {'account_name': 'test1'}}.
+2022-09-10 23:01:32,898-16336-MainThread-Из модуля common.utils функцией main() вызвана функция send_message((<socket.socket fd=568, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 62318), raddr=('127.0.0.1', 7777)>, {'action': 'presence', 'time': 'Sat Sep 10 23:01:32 2022', 'user': {'account_name': 'test1'}}), {}) = None.
+2022-09-10 23:01:32,898-19608-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test2').
+2022-09-10 23:01:32,902-19608-MainThread-запущен клиент по имени test2
+2022-09-10 23:01:32,904-19608-MainThread-Сформировано presence-сообщение
+2022-09-10 23:01:32,906-19608-MainThread-Из модуля __main__ функцией main() вызвана функция create_presence(('test2',), {}) = {'action': 'presence', 'time': 'Sat Sep 10 23:01:32 2022', 'user': {'account_name': 'test2'}}.
+2022-09-10 23:01:32,908-19608-MainThread-Из модуля common.utils функцией main() вызвана функция send_message((<socket.socket fd=432, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 62319), raddr=('127.0.0.1', 7777)>, {'action': 'presence', 'time': 'Sat Sep 10 23:01:32 2022', 'user': {'account_name': 'test2'}}), {}) = None.
+2022-09-10 23:02:58,781-19608-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 23:06:12,169-17984-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 23:06:12,171-17984-MainThread-запущен клиент по имени test1
+2022-09-10 23:06:14,204-17984-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 23:09:36,557-19340-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test2').
+2022-09-10 23:09:36,561-19340-MainThread-запущен клиент по имени test2
+2022-09-10 23:09:36,570-15436-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test3').
+2022-09-10 23:09:36,575-15436-MainThread-запущен клиент по имени test3
+2022-09-10 23:09:36,607-20508-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 23:09:36,610-20508-MainThread-запущен клиент по имени test1
+2022-09-10 23:09:38,604-19340-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 23:09:38,620-15436-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 23:09:38,636-20508-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 23:11:01,664-15636-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test3').
+2022-09-10 23:11:01,667-15636-MainThread-запущен клиент по имени test3
+2022-09-10 23:11:01,686-15516-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test2').
+2022-09-10 23:11:01,689-15516-MainThread-запущен клиент по имени test2
+2022-09-10 23:11:01,711-15712-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 23:11:01,713-15712-MainThread-запущен клиент по имени test1
+2022-09-10 23:11:03,715-15636-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 23:11:03,746-15516-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 23:11:03,762-15712-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 23:13:58,138-5764-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 23:13:58,147-5764-MainThread-запущен клиент по имени test1
+2022-09-10 23:13:58,460-20676-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test3').
+2022-09-10 23:13:58,463-20676-MainThread-запущен клиент по имени test3
+2022-09-10 23:13:58,479-16104-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test2').
+2022-09-10 23:13:58,482-16104-MainThread-запущен клиент по имени test2
+2022-09-10 23:14:00,182-5764-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 23:14:00,494-20676-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 23:14:00,540-16104-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 23:14:43,408-5428-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test3').
+2022-09-10 23:14:43,415-5428-MainThread-запущен клиент по имени test3
+2022-09-10 23:14:43,488-16244-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 23:14:43,490-16244-MainThread-запущен клиент по имени test1
+2022-09-10 23:14:43,494-20072-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test2').
+2022-09-10 23:14:43,496-20072-MainThread-запущен клиент по имени test2
+2022-09-10 23:14:45,454-5428-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 23:14:45,532-16244-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 23:17:27,216-15732-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test3').
+2022-09-10 23:17:27,222-15732-MainThread-запущен клиент по имени test3
+2022-09-10 23:17:27,246-7828-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test2').
+2022-09-10 23:17:27,251-7828-MainThread-запущен клиент по имени test2
+2022-09-10 23:17:27,269-17116-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 23:17:27,271-17116-MainThread-запущен клиент по имени test1
+2022-09-10 23:17:29,251-15732-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 23:17:29,282-7828-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 23:17:29,298-17116-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 23:18:15,831-6712-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'testirovschik').
+2022-09-10 23:18:15,832-6712-MainThread-запущен клиент по имени testirovschik
+2022-09-10 23:18:15,833-6712-MainThread-Сформировано presence-сообщение
+2022-09-10 23:18:15,834-6712-MainThread-Из модуля __main__ функцией main() вызвана функция create_presence(('testirovschik',), {}) = {'action': 'presence', 'time': 'Sat Sep 10 23:18:15 2022', 'user': {'account_name': 'testirovschik'}}.
+2022-09-10 23:18:15,835-6712-MainThread-Из модуля common.utils функцией main() вызвана функция send_message((<socket.socket fd=512, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 62389), raddr=('127.0.0.1', 7777)>, {'action': 'presence', 'time': 'Sat Sep 10 23:18:15 2022', 'user': {'account_name': 'testirovschik'}}), {}) = None.
+2022-09-10 23:18:16,911-12960-Thread-1-Из модуля common.utils функцией self._bootstrap_inner() вызвана функция send_message((<socket.socket fd=668, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 62389)>, {'response': 200}), {}) = None.
+2022-09-10 23:18:16,911-6712-MainThread-Из модуля common.utils функцией main вызвана функция get_message((<socket.socket fd=512, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 62389), raddr=('127.0.0.1', 7777)>,),{})={'response': 200}.
+2022-09-10 23:18:16,913-6712-MainThread-Обработан ответ сервера
+2022-09-10 23:18:16,915-12960-Thread-1-Из модуля __main__ функцией self._bootstrap_inner() вызвана функция proc_msg_fr_client((<Server(Thread-1, started daemon 12960)>, {'action': 'presence', 'time': 'Sat Sep 10 23:18:15 2022', 'user': {'account_name': 'testirovschik'}}, <socket.socket fd=668, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 62389)>), {}) = None.
+2022-09-10 23:18:16,915-6712-MainThread-Из модуля __main__ функцией main вызвана функция process_presns_answ(({'response': 200},),{})=200 : OK.
+2022-09-10 23:18:16,916-6712-MainThread-Установлено соединение с сервером 200 : OK
+2022-09-10 23:18:16,918-6712-MainThread-запущены потоки обработки и отправки сообщений
+2022-09-10 23:18:49,029-21376-Thread-2-Сформирован словарь-сообщение {'action': 'message', 'sender': 'testirovschik', 'to': 'testirovschik', 'time': 'Sat Sep 10 23:18:49 2022', 'message_text': 'hello, you'}
+2022-09-10 23:18:49,032-21376-Thread-2-Из модуля common.utils функцией self._bootstrap_inner() вызвана функция send_message((<socket.socket fd=512, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 62389), raddr=('127.0.0.1', 7777)>, {'action': 'message', 'sender': 'testirovschik', 'to': 'testirovschik', 'time': 'Sat Sep 10 23:18:49 2022', 'message_text': 'hello, you'}), {}) = None.
+2022-09-10 23:18:49,034-21376-Thread-2-testirovschik отправлено сообщение 
+2022-09-10 23:18:49,035-21376-Thread-2-Из модуля __main__ функцией self._bootstrap_inner() вызвана функция create_message((<ClientSender(Thread-2, started daemon 21376)>,), {}) = None.
+2022-09-10 23:18:49,898-12960-Thread-1-Из модуля __main__ функцией self._bootstrap_inner() вызвана функция proc_msg_fr_client((<Server(Thread-1, started daemon 12960)>, {'action': 'message', 'sender': 'testirovschik', 'to': 'testirovschik', 'time': 'Sat Sep 10 23:18:49 2022', 'message_text': 'hello, you'}, <socket.socket fd=668, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 62389)>), {}) = None.
+2022-09-10 23:18:49,900-12960-Thread-1-Из модуля common.utils функцией self._bootstrap_inner() вызвана функция send_message((<socket.socket fd=668, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 62389)>, {'action': 'message', 'sender': 'testirovschik', 'to': 'testirovschik', 'time': 'Sat Sep 10 23:18:49 2022', 'message_text': 'hello, you'}), {}) = None.
+2022-09-10 23:18:49,902-10156-Thread-1-Из модуля common.utils функцией run вызвана функция get_message((<socket.socket fd=512, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 62389), raddr=('127.0.0.1', 7777)>,),{})={'action': 'message', 'sender': 'testirovschik', 'to': 'testirovschik', 'time': 'Sat Sep 10 23:18:49 2022', 'message_text': 'hello, you'}.
+2022-09-10 23:18:49,905-10156-Thread-1-got hello, you from testirovschik
+2022-09-10 23:18:49,921-12960-Thread-1-Из модуля __main__ функцией self._bootstrap_inner() вызвана функция proc_msg_to_client((<Server(Thread-1, started daemon 12960)>, {'action': 'message', 'sender': 'testirovschik', 'to': 'testirovschik', 'time': 'Sat Sep 10 23:18:49 2022', 'message_text': 'hello, you'}, [<socket.socket fd=668, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 62389)>]), {}) = None.
+2022-09-10 23:19:02,816-21376-Thread-2-Из модуля __main__ функцией self._bootstrap_inner() вызвана функция create_exit_message((<ClientSender(Thread-2, started daemon 21376)>,), {}) = {'action': 'exit', 'time': 'Sat Sep 10 23:19:02 2022', 'account_name': 'testirovschik'}.
+2022-09-10 23:19:02,819-21376-Thread-2-Из модуля common.utils функцией self._bootstrap_inner() вызвана функция send_message((<socket.socket fd=512, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 62389), raddr=('127.0.0.1', 7777)>, {'action': 'exit', 'time': 'Sat Sep 10 23:19:02 2022', 'account_name': 'testirovschik'}), {}) = None.
+2022-09-10 23:19:02,821-21376-Thread-2-пользователь testirovschik завершил работу
+2022-09-10 23:19:03,323-21376-Thread-2-Из модуля __main__ функцией self._bootstrap_inner() вызвана функция run((<ClientSender(Thread-2, started daemon 21376)>,), {}) = None.
+2022-09-10 23:19:04,229-6712-MainThread-клиент прекратил работу
+2022-09-10 23:19:04,231-6712-MainThread-Клиент запущен в режиме main-скрипта
+2022-09-10 23:19:43,463-17116-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 23:19:43,477-17116-MainThread-запущен клиент по имени test1
+2022-09-10 23:19:43,615-10700-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test2').
+2022-09-10 23:19:43,620-10700-MainThread-запущен клиент по имени test2
+2022-09-10 23:19:43,639-10296-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test3').
+2022-09-10 23:19:43,643-10296-MainThread-запущен клиент по имени test3
+2022-09-10 23:19:45,522-17116-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 23:19:45,647-10700-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 23:19:45,693-10296-MainThread-не удалось подключиться к 127.0.0.1:7777
+2022-09-10 23:20:09,963-6724-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-10 23:20:09,964-6724-MainThread-запущен клиент по имени test1
+2022-09-10 23:20:10,095-8832-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test3').
+2022-09-10 23:20:10,103-8832-MainThread-запущен клиент по имени test3
+2022-09-10 23:20:10,196-21316-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test2').
+2022-09-10 23:20:10,204-21316-MainThread-запущен клиент по имени test2
+2022-09-10 23:20:10,616-8832-MainThread-Сформировано presence-сообщение
+2022-09-10 23:20:10,617-8832-MainThread-Из модуля __main__ функцией main() вызвана функция create_presence(('test3',), {}) = {'action': 'presence', 'time': 'Sat Sep 10 23:20:10 2022', 'user': {'account_name': 'test3'}}.
+2022-09-10 23:20:10,620-8832-MainThread-Из модуля common.utils функцией main() вызвана функция send_message((<socket.socket fd=392, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 62396), raddr=('127.0.0.1', 7777)>, {'action': 'presence', 'time': 'Sat Sep 10 23:20:10 2022', 'user': {'account_name': 'test3'}}), {}) = None.
+2022-09-10 23:20:10,710-21316-MainThread-Сформировано presence-сообщение
+2022-09-10 23:20:10,711-21316-MainThread-Из модуля __main__ функцией main() вызвана функция create_presence(('test2',), {}) = {'action': 'presence', 'time': 'Sat Sep 10 23:20:10 2022', 'user': {'account_name': 'test2'}}.
+2022-09-10 23:20:10,721-21316-MainThread-Из модуля common.utils функцией main() вызвана функция send_message((<socket.socket fd=324, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 62397), raddr=('127.0.0.1', 7777)>, {'action': 'presence', 'time': 'Sat Sep 10 23:20:10 2022', 'user': {'account_name': 'test2'}}), {}) = None.
+2022-09-10 23:20:10,778-13144-Thread-1-Из модуля common.utils функцией self._bootstrap_inner() вызвана функция send_message((<socket.socket fd=332, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 62396)>, {'response': 200}), {}) = None.
+2022-09-10 23:20:10,778-8832-MainThread-Из модуля common.utils функцией main вызвана функция get_message((<socket.socket fd=392, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 62396), raddr=('127.0.0.1', 7777)>,),{})={'response': 200}.
+2022-09-10 23:20:10,779-8832-MainThread-Обработан ответ сервера
+2022-09-10 23:20:10,786-13144-Thread-1-Из модуля __main__ функцией self._bootstrap_inner() вызвана функция proc_msg_fr_client((<Server(Thread-1, started daemon 13144)>, {'action': 'presence', 'time': 'Sat Sep 10 23:20:10 2022', 'user': {'account_name': 'test3'}}, <socket.socket fd=332, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 62396)>), {}) = None.
+2022-09-10 23:20:10,786-8832-MainThread-Из модуля __main__ функцией main вызвана функция process_presns_answ(({'response': 200},),{})=200 : OK.
+2022-09-10 23:20:10,788-8832-MainThread-Установлено соединение с сервером 200 : OK
+2022-09-10 23:20:10,794-8832-MainThread-запущены потоки обработки и отправки сообщений
+2022-09-10 23:20:10,978-6724-MainThread-Сформировано presence-сообщение
+2022-09-10 23:20:10,980-6724-MainThread-Из модуля __main__ функцией main() вызвана функция create_presence(('test1',), {}) = {'action': 'presence', 'time': 'Sat Sep 10 23:20:10 2022', 'user': {'account_name': 'test1'}}.
+2022-09-10 23:20:10,989-6724-MainThread-Из модуля common.utils функцией main() вызвана функция send_message((<socket.socket fd=376, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 62395), raddr=('127.0.0.1', 7777)>, {'action': 'presence', 'time': 'Sat Sep 10 23:20:10 2022', 'user': {'account_name': 'test1'}}), {}) = None.
+2022-09-10 23:20:11,040-13144-Thread-1-Из модуля common.utils функцией self._bootstrap_inner() вызвана функция send_message((<socket.socket fd=684, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 62397)>, {'response': 200}), {}) = None.
+2022-09-10 23:20:11,041-21316-MainThread-Из модуля common.utils функцией main вызвана функция get_message((<socket.socket fd=324, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 62397), raddr=('127.0.0.1', 7777)>,),{})={'response': 200}.
+2022-09-10 23:20:11,041-21316-MainThread-Обработан ответ сервера
+2022-09-10 23:20:11,043-13144-Thread-1-Из модуля __main__ функцией self._bootstrap_inner() вызвана функция proc_msg_fr_client((<Server(Thread-1, started daemon 13144)>, {'action': 'presence', 'time': 'Sat Sep 10 23:20:10 2022', 'user': {'account_name': 'test2'}}, <socket.socket fd=684, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 62397)>), {}) = None.
+2022-09-10 23:20:11,049-21316-MainThread-Из модуля __main__ функцией main вызвана функция process_presns_answ(({'response': 200},),{})=200 : OK.
+2022-09-10 23:20:11,051-21316-MainThread-Установлено соединение с сервером 200 : OK
+2022-09-10 23:20:11,053-21316-MainThread-запущены потоки обработки и отправки сообщений
+2022-09-10 23:20:12,085-13144-Thread-1-Из модуля common.utils функцией self._bootstrap_inner() вызвана функция send_message((<socket.socket fd=444, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 62395)>, {'response': 200}), {}) = None.
+2022-09-10 23:20:12,086-6724-MainThread-Из модуля common.utils функцией main вызвана функция get_message((<socket.socket fd=376, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 62395), raddr=('127.0.0.1', 7777)>,),{})={'response': 200}.
+2022-09-10 23:20:12,086-6724-MainThread-Обработан ответ сервера
+2022-09-10 23:20:12,088-13144-Thread-1-Из модуля __main__ функцией self._bootstrap_inner() вызвана функция proc_msg_fr_client((<Server(Thread-1, started daemon 13144)>, {'action': 'presence', 'time': 'Sat Sep 10 23:20:10 2022', 'user': {'account_name': 'test1'}}, <socket.socket fd=444, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 62395)>), {}) = None.
+2022-09-10 23:20:12,090-6724-MainThread-Из модуля __main__ функцией main вызвана функция process_presns_answ(({'response': 200},),{})=200 : OK.
+2022-09-10 23:20:12,094-6724-MainThread-Установлено соединение с сервером 200 : OK
+2022-09-10 23:20:12,098-6724-MainThread-запущены потоки обработки и отправки сообщений
+2022-09-10 23:20:31,999-17344-Thread-2-Сформирован словарь-сообщение {'action': 'message', 'sender': 'test1', 'to': 'test2', 'time': 'Sat Sep 10 23:20:31 2022', 'message_text': 'hello you test2'}
+2022-09-10 23:20:32,003-17344-Thread-2-Из модуля common.utils функцией self._bootstrap_inner() вызвана функция send_message((<socket.socket fd=376, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 62395), raddr=('127.0.0.1', 7777)>, {'action': 'message', 'sender': 'test1', 'to': 'test2', 'time': 'Sat Sep 10 23:20:31 2022', 'message_text': 'hello you test2'}), {}) = None.
+2022-09-10 23:20:32,004-17344-Thread-2-test2 отправлено сообщение 
+2022-09-10 23:20:32,006-17344-Thread-2-Из модуля __main__ функцией self._bootstrap_inner() вызвана функция create_message((<ClientSender(Thread-2, started daemon 17344)>,), {}) = None.
+2022-09-10 23:20:32,248-13144-Thread-1-Из модуля __main__ функцией self._bootstrap_inner() вызвана функция proc_msg_fr_client((<Server(Thread-1, started daemon 13144)>, {'action': 'message', 'sender': 'test1', 'to': 'test2', 'time': 'Sat Sep 10 23:20:31 2022', 'message_text': 'hello you test2'}, <socket.socket fd=444, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 62395)>), {}) = None.
+2022-09-10 23:20:32,249-13144-Thread-1-Из модуля common.utils функцией self._bootstrap_inner() вызвана функция send_message((<socket.socket fd=684, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 62397)>, {'action': 'message', 'sender': 'test1', 'to': 'test2', 'time': 'Sat Sep 10 23:20:31 2022', 'message_text': 'hello you test2'}), {}) = None.
+2022-09-10 23:20:32,252-13144-Thread-1-Из модуля __main__ функцией self._bootstrap_inner() вызвана функция proc_msg_to_client((<Server(Thread-1, started daemon 13144)>, {'action': 'message', 'sender': 'test1', 'to': 'test2', 'time': 'Sat Sep 10 23:20:31 2022', 'message_text': 'hello you test2'}, [<socket.socket fd=332, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 62396)>, <socket.socket fd=684, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 62397)>, <socket.socket fd=444, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 62395)>]), {}) = None.
+2022-09-10 23:20:32,253-12972-Thread-1-Из модуля common.utils функцией run вызвана функция get_message((<socket.socket fd=324, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 62397), raddr=('127.0.0.1', 7777)>,),{})={'action': 'message', 'sender': 'test1', 'to': 'test2', 'time': 'Sat Sep 10 23:20:31 2022', 'message_text': 'hello you test2'}.
+2022-09-10 23:20:32,253-12972-Thread-1-got hello you test2 from test1
+2022-09-11 20:36:48,368-6760-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test3').
+2022-09-11 20:36:48,375-6760-MainThread-запущен клиент по имени test3
+2022-09-11 20:36:48,435-17868-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test2').
+2022-09-11 20:36:48,435-20128-MainThread-Из модуля common.utils функцией main вызвана функция arg_parser((),{})=('127.0.0.1', 7777, 'test1').
+2022-09-11 20:36:48,442-20128-MainThread-запущен клиент по имени test1
+2022-09-11 20:36:48,442-17868-MainThread-запущен клиент по имени test2
+2022-09-11 20:36:49,409-6760-MainThread-Сформировано presence-сообщение
+2022-09-11 20:36:49,410-6760-MainThread-Из модуля __main__ функцией main() вызвана функция create_presence(('test3',), {}) = {'action': 'presence', 'time': 'Sun Sep 11 20:36:49 2022', 'user': {'account_name': 'test3'}}.
+2022-09-11 20:36:49,416-6760-MainThread-Из модуля common.utils функцией main() вызвана функция send_message((<socket.socket fd=424, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 54324), raddr=('127.0.0.1', 7777)>, {'action': 'presence', 'time': 'Sun Sep 11 20:36:49 2022', 'user': {'account_name': 'test3'}}), {}) = None.
+2022-09-11 20:36:49,471-20128-MainThread-Сформировано presence-сообщение
+2022-09-11 20:36:49,471-17868-MainThread-Сформировано presence-сообщение
+2022-09-11 20:36:49,473-20128-MainThread-Из модуля __main__ функцией main() вызвана функция create_presence(('test1',), {}) = {'action': 'presence', 'time': 'Sun Sep 11 20:36:49 2022', 'user': {'account_name': 'test1'}}.
+2022-09-11 20:36:49,473-17868-MainThread-Из модуля __main__ функцией main() вызвана функция create_presence(('test2',), {}) = {'action': 'presence', 'time': 'Sun Sep 11 20:36:49 2022', 'user': {'account_name': 'test2'}}.
+2022-09-11 20:36:49,490-20128-MainThread-Из модуля common.utils функцией main() вызвана функция send_message((<socket.socket fd=512, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 54325), raddr=('127.0.0.1', 7777)>, {'action': 'presence', 'time': 'Sun Sep 11 20:36:49 2022', 'user': {'account_name': 'test1'}}), {}) = None.
+2022-09-11 20:36:49,491-17868-MainThread-Из модуля common.utils функцией main() вызвана функция send_message((<socket.socket fd=460, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 54326), raddr=('127.0.0.1', 7777)>, {'action': 'presence', 'time': 'Sun Sep 11 20:36:49 2022', 'user': {'account_name': 'test2'}}), {}) = None.
+2022-09-11 20:36:49,554-21064-Thread-1-Из модуля common.utils функцией self._bootstrap_inner() вызвана функция send_message((<socket.socket fd=764, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 54324)>, {'response': 200}), {}) = None.
+2022-09-11 20:36:49,554-6760-MainThread-Из модуля common.utils функцией main вызвана функция get_message((<socket.socket fd=424, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 54324), raddr=('127.0.0.1', 7777)>,),{})={'response': 200}.
+2022-09-11 20:36:49,555-6760-MainThread-Обработан ответ сервера
+2022-09-11 20:36:49,559-6760-MainThread-Из модуля __main__ функцией main вызвана функция process_presns_answ(({'response': 200},),{})=200 : OK.
+2022-09-11 20:36:49,564-6760-MainThread-Установлено соединение с сервером 200 : OK
+2022-09-11 20:36:49,567-6760-MainThread-запущены потоки обработки и отправки сообщений
+2022-09-11 20:36:49,577-21064-Thread-1-Из модуля __main__ функцией self._bootstrap_inner() вызвана функция proc_msg_fr_client((<Server(Thread-1, started daemon 21064)>, {'action': 'presence', 'time': 'Sun Sep 11 20:36:49 2022', 'user': {'account_name': 'test3'}}, <socket.socket fd=764, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 54324)>), {}) = None.
+2022-09-11 20:36:49,637-21064-Thread-1-Из модуля common.utils функцией self._bootstrap_inner() вызвана функция send_message((<socket.socket fd=724, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 54325)>, {'response': 200}), {}) = None.
+2022-09-11 20:36:49,637-20128-MainThread-Из модуля common.utils функцией main вызвана функция get_message((<socket.socket fd=512, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 54325), raddr=('127.0.0.1', 7777)>,),{})={'response': 200}.
+2022-09-11 20:36:49,637-20128-MainThread-Обработан ответ сервера
+2022-09-11 20:36:49,643-20128-MainThread-Из модуля __main__ функцией main вызвана функция process_presns_answ(({'response': 200},),{})=200 : OK.
+2022-09-11 20:36:49,647-20128-MainThread-Установлено соединение с сервером 200 : OK
+2022-09-11 20:36:49,651-20128-MainThread-запущены потоки обработки и отправки сообщений
+2022-09-11 20:36:49,667-21064-Thread-1-Из модуля __main__ функцией self._bootstrap_inner() вызвана функция proc_msg_fr_client((<Server(Thread-1, started daemon 21064)>, {'action': 'presence', 'time': 'Sun Sep 11 20:36:49 2022', 'user': {'account_name': 'test1'}}, <socket.socket fd=724, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 54325)>), {}) = None.
+2022-09-11 20:36:49,714-21064-Thread-1-Из модуля common.utils функцией self._bootstrap_inner() вызвана функция send_message((<socket.socket fd=564, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 54326)>, {'response': 200}), {}) = None.
+2022-09-11 20:36:49,714-17868-MainThread-Из модуля common.utils функцией main вызвана функция get_message((<socket.socket fd=460, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 54326), raddr=('127.0.0.1', 7777)>,),{})={'response': 200}.
+2022-09-11 20:36:49,715-17868-MainThread-Обработан ответ сервера
+2022-09-11 20:36:49,717-17868-MainThread-Из модуля __main__ функцией main вызвана функция process_presns_answ(({'response': 200},),{})=200 : OK.
+2022-09-11 20:36:49,720-17868-MainThread-Установлено соединение с сервером 200 : OK
+2022-09-11 20:36:49,726-17868-MainThread-запущены потоки обработки и отправки сообщений
+2022-09-11 20:36:49,744-21064-Thread-1-Из модуля __main__ функцией self._bootstrap_inner() вызвана функция proc_msg_fr_client((<Server(Thread-1, started daemon 21064)>, {'action': 'presence', 'time': 'Sun Sep 11 20:36:49 2022', 'user': {'account_name': 'test2'}}, <socket.socket fd=564, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 54326)>), {}) = None.
+2022-09-11 20:37:08,859-11788-Thread-2-Сформирован словарь-сообщение {'action': 'message', 'sender': 'test3', 'to': 'test2', 'time': 'Sun Sep 11 20:37:08 2022', 'message_text': 'hello test2'}
+2022-09-11 20:37:08,861-11788-Thread-2-Из модуля common.utils функцией self._bootstrap_inner() вызвана функция send_message((<socket.socket fd=424, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 54324), raddr=('127.0.0.1', 7777)>, {'action': 'message', 'sender': 'test3', 'to': 'test2', 'time': 'Sun Sep 11 20:37:08 2022', 'message_text': 'hello test2'}), {}) = None.
+2022-09-11 20:37:08,862-11788-Thread-2-test2 отправлено сообщение 
+2022-09-11 20:37:08,864-11788-Thread-2-Из модуля __main__ функцией self._bootstrap_inner() вызвана функция create_message((<ClientSender(Thread-2, started daemon 11788)>,), {}) = None.
+2022-09-11 20:37:08,946-21064-Thread-1-Из модуля __main__ функцией self._bootstrap_inner() вызвана функция proc_msg_fr_client((<Server(Thread-1, started daemon 21064)>, {'action': 'message', 'sender': 'test3', 'to': 'test2', 'time': 'Sun Sep 11 20:37:08 2022', 'message_text': 'hello test2'}, <socket.socket fd=764, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 54324)>), {}) = None.
+2022-09-11 20:37:08,946-21064-Thread-1-Из модуля common.utils функцией self._bootstrap_inner() вызвана функция send_message((<socket.socket fd=564, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 54326)>, {'action': 'message', 'sender': 'test3', 'to': 'test2', 'time': 'Sun Sep 11 20:37:08 2022', 'message_text': 'hello test2'}), {}) = None.
+2022-09-11 20:37:08,947-17192-Thread-1-Из модуля common.utils функцией run вызвана функция get_message((<socket.socket fd=460, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 54326), raddr=('127.0.0.1', 7777)>,),{})={'action': 'message', 'sender': 'test3', 'to': 'test2', 'time': 'Sun Sep 11 20:37:08 2022', 'message_text': 'hello test2'}.
+2022-09-11 20:37:08,948-17192-Thread-1-got hello test2 from test3
+2022-09-11 20:37:08,962-21064-Thread-1-Из модуля __main__ функцией self._bootstrap_inner() вызвана функция proc_msg_to_client((<Server(Thread-1, started daemon 21064)>, {'action': 'message', 'sender': 'test3', 'to': 'test2', 'time': 'Sun Sep 11 20:37:08 2022', 'message_text': 'hello test2'}, [<socket.socket fd=764, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 54324)>, <socket.socket fd=724, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 54325)>, <socket.socket fd=564, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 54326)>]), {}) = None.
+2022-09-11 20:37:33,982-11788-Thread-2-Сформирован словарь-сообщение {'action': 'message', 'sender': 'test3', 'to': 'test1', 'time': 'Sun Sep 11 20:37:33 2022', 'message_text': 'hrllo test1'}
+2022-09-11 20:37:33,985-11788-Thread-2-Из модуля common.utils функцией self._bootstrap_inner() вызвана функция send_message((<socket.socket fd=424, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 54324), raddr=('127.0.0.1', 7777)>, {'action': 'message', 'sender': 'test3', 'to': 'test1', 'time': 'Sun Sep 11 20:37:33 2022', 'message_text': 'hrllo test1'}), {}) = None.
+2022-09-11 20:37:33,987-11788-Thread-2-test1 отправлено сообщение 
+2022-09-11 20:37:33,989-11788-Thread-2-Из модуля __main__ функцией self._bootstrap_inner() вызвана функция create_message((<ClientSender(Thread-2, started daemon 11788)>,), {}) = None.
+2022-09-11 20:37:34,245-21064-Thread-1-Из модуля __main__ функцией self._bootstrap_inner() вызвана функция proc_msg_fr_client((<Server(Thread-1, started daemon 21064)>, {'action': 'message', 'sender': 'test3', 'to': 'test1', 'time': 'Sun Sep 11 20:37:33 2022', 'message_text': 'hrllo test1'}, <socket.socket fd=764, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 54324)>), {}) = None.
+2022-09-11 20:37:34,247-21064-Thread-1-Из модуля common.utils функцией self._bootstrap_inner() вызвана функция send_message((<socket.socket fd=724, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 54325)>, {'action': 'message', 'sender': 'test3', 'to': 'test1', 'time': 'Sun Sep 11 20:37:33 2022', 'message_text': 'hrllo test1'}), {}) = None.
+2022-09-11 20:37:34,250-17844-Thread-1-Из модуля common.utils функцией run вызвана функция get_message((<socket.socket fd=512, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 54325), raddr=('127.0.0.1', 7777)>,),{})={'action': 'message', 'sender': 'test3', 'to': 'test1', 'time': 'Sun Sep 11 20:37:33 2022', 'message_text': 'hrllo test1'}.
+2022-09-11 20:37:34,250-17844-Thread-1-got hrllo test1 from test3
+2022-09-11 20:37:34,284-21064-Thread-1-Из модуля __main__ функцией self._bootstrap_inner() вызвана функция proc_msg_to_client((<Server(Thread-1, started daemon 21064)>, {'action': 'message', 'sender': 'test3', 'to': 'test1', 'time': 'Sun Sep 11 20:37:33 2022', 'message_text': 'hrllo test1'}, [<socket.socket fd=764, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 54324)>, <socket.socket fd=724, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 54325)>, <socket.socket fd=564, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0, laddr=('127.0.0.1', 7777), raddr=('127.0.0.1', 54326)>]), {}) = None.

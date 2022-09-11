@@ -88,7 +88,7 @@ class ClientSender(Thread, metaclass=ClientVerifier):
                 time.sleep(0.5)
                 break
             else:
-                print('команда не распознана, не поддерживается')
+                print('команда {command} не распознана, не поддерживается')
 
 
     def list_available_commands(self):
@@ -198,7 +198,7 @@ def main():
         cl_logger.error(f'не удалось подключиться к {server_address}:{server_port}')
         sys.exit(1)
     else:
-        # Запуск потоков приема и тправки
+        # Запуск потоков приема и отправки
         receiver = ClientReader(client_name, client_socket)  # Thread(target=proc_msg_from_srv, args=(client_socket, client_name), daemon=True)
         receiver.daemon = True
         receiver.start()  # запуск потока приема сообщений
