@@ -38,18 +38,36 @@ class ServerStorage:
             self.port = port
             self.id = None
 
-    def __init__(self):
+    class UsersContacts:
+        '''класс таблица контактов пользователей'''
+        def __init__(self, user_id, contact_id):
+            self.id = None
+            self.user_id = user_id
+            self.contact_id = contact_id
+
+    class UsersHistory:
+        '''класс таблица истории действий пользователей'''
+        def __init__(self, user):
+            self.id = None
+            self.user_name = user
+            self.sent = 0
+            self.rcvd = 0
+
+    def __init__(self, path):
         '''процедура создания базы данных'''
         # DB_URL = 'sqlite:///srv_db.db3'
         # echo-аргумент движка позволяет не выводить текст sql-запросов
         # pool_recycle восстанавливает автомаически соединение с базой по истечении указанного срока
         # connect_args управляет отслеживанием потоков, подключающихся к базе; по умолчанию база доступна лишь для одного какого-то потока
+        # import pdb; pdb.set_trace()  # L4 path new argument
         self.engine = create_engine(
-            DB_URL,
+            path,  # DB_URL,
             echo=False,
             pool_recycle=7200,
             connect_args={'check_same_thread':False})
+        
         self.meta = MetaData()  #MetaData object
+        
         users_table = Table('Users_All', self.meta,
             Column('id', Integer, primary_key=True),
             Column('user_name', String, unique=True),
@@ -69,12 +87,25 @@ class ServerStorage:
             Column('ip', String),
             Column('port', Integer),
             Column('logged_at', DateTime))
-        # import pdb; pdb.set_trace()
+        # import pdb; pdb.set_trace()  # L4
+        contacts_table = Table('Users_Contacts', self.meta,
+            Column('id', Integer, primary_key=True),
+            Column('user_id', ForeignKey('Users_All.id')),
+            Column('contact_id', ForeignKey('Users_All.id')))
+
+        users_history_table = Table('Users_History', self.meta,
+            Column('id', Integer, primary_key=True),
+            Column('user_id', ForeignKey('Users_All.id')),
+            Column('sent', Integer),
+            Column('rcvd', Integer))
+
         self.meta.create_all(self.engine)   # creation
         mapper(self.UsersAll, users_table)  # mapping
         mapper(self.UsersActive, users_active_table)
         mapper(self.LoginHistory, users_login_history_table)
-        
+        mapper(self.UsersContacts, contacts_table)
+        mapper(self.UsersHistory, users_history_table)
+
         Session = sessionmaker(bind=self.engine)
         self.session = Session()            # session's creation
 
@@ -142,9 +173,70 @@ class ServerStorage:
             query = query.filter(self.UsersAll.user_name==user_name)
         return query.all()
 
+    def reg_message(self, sender, dest):
+        # L4 register message in the db
+        # import pdb; pdb.set_trace()
+        sender = self.session.query(self.UsersAll).filter_by(user_name=sender).first().id
+        receiver = self.session.query(self.UsersAll).filter_by(user_name=dest).first().id
+        sender_rw = self.session.query(self.UsersHistory).filter_by(id=sender)
+        sender_rw.sent += 1
+        rcvd_rw = self.session.query(self.UsersHistory).filter_byt(id=receiver).first()
+        rcvd_rw += 1
+
+        self.session.commit()
+
+    def add_contact(self, sender, contact):
+        # L4 add contact for user
+        import pdb; pdb.set_trace()
+        sender = self.session.query(self.UsersAll).filter_by(user_name=sender).first()
+        contact = self.session.query(self.UsersAll).filter_by(user_name=contact).first()
+
+        if not contact or self.session.query(self.UsersContacts).filter_by(user_id=sender.id, contact_id=contact.id).count():
+            return
+        else:
+            contact_row = self.UsersContacts(sender.id, contact.id)
+            self.session.add(contact_row)
+            self.session.commit()
+
+    def remove_contact(self, user_name, contact_name):
+        # L4 delete contact from dbase
+        # import pdb; pdb.set_trace()
+        user = self.session.query(self.UsersAll).filter_by(user_name=user_name).first()
+        contact = self.session.query(self.UsersAll).filter_by(user_name=contact_name).first()
+        if not contact:
+            return
+        else:
+            print(
+                self.session.query(self.UsersContacts).filter(
+                    self.UsersContacts.user_id==user.id,
+                    self.UsersContacts.contact_id==contact.id
+                ).delete()
+            )
+            self.session.commit()
+
+    def get_user_contacts(self, user_name):
+        # L4 return contacts of the selected user
+        # import pdb; pdb.set_trace()
+        user = self.session.query(self.UsersAll).filter_by(user_name=user_name).one()
+        query = \
+        self.session.query(self.UsersContacts, self.UsersAll.user_name).filter_by(user_id=user.id)\
+        .join\
+        (self.UsersAll, self.UsersContacts.contact_id==self.UsersAll.id)
+        return [contact[1] for contact in query.all()]
+
+    def message_history(self):
+        # L4 return numer of send and got messages
+        query = self.session.query(
+            self.UsersAll.user_name,
+            self.UsersAll.last_login,
+            self.UsersHistory.sent,
+            self.UsersHistory.rcvd)\
+            .join(self.UsersAll)
+        return query.all()
 
 # debug
 if __name__ == '__main__':
+    import pdb; pdb.set_trace()
     test_base = ServerStorage()
     test_base.user_login('client_1', '192.168.1.4', 8080)
     test_base.user_login('client_2', '192.168.1.5', 7777)

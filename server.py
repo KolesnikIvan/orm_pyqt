@@ -1,25 +1,15 @@
-import sys
+import sys, os
+from pathlib import Path
 import socket
 import json
 from common.utils import get_message, send_message, arg_parser
 from common.variables import (
-    MAX_CONNECTIONS,
-    DEFAULT_PORT,
-    ACTION,
-    ACCOUNT_NAME,
-    PRESENCE,
-    TIME,
-    USER,
-    SENDER,
-    RESPONSE,
-    PRESENCE,
-    ERROR,
-    MESSAGE,
-    MESSAGE_TEXT,
-    RESPONSE_400,
-    DESTINATION,
-    RESPONSE_200,
-    EXIT,
+    MAX_CONNECTIONS, DEFAULT_PORT, ACTION, ACCOUNT_NAME,
+    PRESENCE, RESPONSE_202, TIME, USER,
+    SENDER, RESPONSE, PRESENCE, ERROR,
+    MESSAGE, MESSAGE_TEXT, RESPONSE_400, DESTINATION,
+    RESPONSE_200, RESPONSE_202, EXIT, GET_CONTACTS,
+    LIST_INFO, ADD_CONTACT, DEL_CONTACT, USERS_LIST
     )
 from logs.config_log_server import srv_logger
 from decos import log_function, Log_class
@@ -27,9 +17,24 @@ from select import select
 import time
 from metaclasses import ServerVerifier
 from descriptors import Port
-from threading import Thread
+from threading import Thread, Lock
 from srv_db import ServerStorage
 
+from PyQt5.QtWidgets import QApplication, QMessageBox
+from PyQt5.QtCore import QTimer
+from PyQt5.QtGui import QStandardItemModel, QStandardItem
+from srv_gui import (
+    MainWindow,
+    gui_create_table,
+    HistoryWindow,
+    gui_create_hist,
+    ConfigWindow,
+)
+import configparser
+
+# если пользователь новый, обратиться к базе
+connection_is_new = False  
+conn_flag_lock = Lock()
 
 class Server(Thread, metaclass=ServerVerifier):
     port = Port()
@@ -45,10 +50,11 @@ class Server(Thread, metaclass=ServerVerifier):
     def init_socket(self):
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        # import pdb; pdb.set_trace()
         server_socket.bind((self.ip, self.port))
-        server_socket.settimeout(1)
+        server_socket.settimeout(0.5)
         self.sock = server_socket
-        self.sock.listen(MAX_CONNECTIONS)    # связывание сокета с портом
+        self.sock.listen() # MAX_CONNECTIONS)    # связывание сокета с портом
         srv_logger.info(f'Сервер запущен по адресу {self.ip}:{self.port}')
 
     def run(self):
@@ -62,7 +68,7 @@ class Server(Thread, metaclass=ServerVerifier):
                 srv_logger.error('Сообщение от клиента некорректно')
                 sys.exit(1)
             except OSError as e:
-                # srv_logger.error(f'ошибка {e} на сервере')
+                # srv_logger.error(f'ошибка {e} на сервере')  # эта строка вывод при работе сервера
                 pass
             else:
                 srv_logger.info(f'установлено соединение с клиентом {client_address}')
@@ -78,15 +84,16 @@ class Server(Thread, metaclass=ServerVerifier):
                 srv_logger.error(f'ошибка {e} при использовании сервером модуля select')
                 pass
 
-            # если сообщение, то в словарь, иначе - удаляем клиента из списка
+            # сообщение в словарь, иначе удаляем клиента из списка
             if socks_to_receive:
                 for sender in socks_to_receive:
                     try:  # process message to add it in messages list
                         # import pdb; pdb.set_trace()
                         self.proc_msg_fr_client(get_message(sender), sender)
                     except Exception as e:
-                        srv_logger.info(f'клиент {sender} отключился')
-                        self.clients.remove(sender)
+                        pass
+                        # srv_logger.info(f'клиент {sender} отключился')
+                        # self.clients.remove(sender)
 
             for msg in self.msgs_to_send:
                 try:
@@ -117,9 +124,10 @@ class Server(Thread, metaclass=ServerVerifier):
     @log_function
     def proc_msg_fr_client(self, message, client_sock):
         '''Проверка сообщения от клиента. Если надо, отправит словарь-ответ.'''
+        global connection_is_new
         srv_logger.info(f'разбор сообщения {message} от клиента {client_sock}')
         # если дежурное приветствие, то принять и ответить
-        # import pdb; pdb.set_trace
+        # import pdb; pdb.set_trace()  # L4  из-за этой остановки клиенты отключаются по таймауту, остановка в начале процедуры обработки сообщений не позволяет им подключиться
         if ACTION in message\
         and message[ACTION] == PRESENCE\
         and TIME in message\
@@ -131,6 +139,8 @@ class Server(Thread, metaclass=ServerVerifier):
                 self.db.user_login(message[USER][ACCOUNT_NAME], client_ip, client_port)
                 # import pdb; pdb.set_trace()
                 send_message(client_sock, RESPONSE_200)
+                with conn_flag_lock:
+                    connection_is_new = True
                 srv_logger.info('Получено корректное сообщение от клиента, сформирован ответ 200')
             else:
                 response = RESPONSE_400
@@ -140,23 +150,67 @@ class Server(Thread, metaclass=ServerVerifier):
                 self.clients.remove(client_sock)    # L3
                 client_sock.close()
             return
-       
+        # если целевое сообщение, внести в список сообщений, не отвечать
         elif ACTION in message\
         and message[ACTION] == MESSAGE\
+        and DESTINATION in message\
         and TIME in message\
-        and MESSAGE_TEXT in message\
         and SENDER in message\
-        and DESTINATION in message:  # если целевое сообщение, то внести в список сообщений, не отвечать
+        and MESSAGE_TEXT in message\
+        and self.names[message[SENDER]] == client_sock:
             self.msgs_to_send.append(message)
+            # import pdb; pdb.set_trace()  # L4
+            self.db.reg_message(
+                message[SENDER],
+                message[DESTINATION]
+            )
             return
+        # если сообщение о выходе
         elif ACTION in message\
         and message[ACTION] == EXIT\
         and ACCOUNT_NAME in message:  # client disconnects
-            self.db.user_logount(message[ACCOUNT_NAME]) # L3
+            self.db.user_logout(message[ACCOUNT_NAME]) # L3
             self.clients.remove(self.names[message[ACCOUNT_NAME]])
             self.names[message[ACCOUNT_NAME]].close()
             del self.names[message[ACCOUNT_NAME]]
+            with conn_flag_lock:
+                connection_is_new = True
+            srv_logger.info(f'user {message[ACCOUNT_NAME]} left the chat')
             return
+        # запрос списка контактов
+        elif ACTION in message\
+        and message[ACTION] == GET_CONTACTS\
+        and USER in message\
+        and self.names[message[USER]] == client_sock:
+            # import pdb; pdb.set_trace() 
+            response = RESPONSE_202
+            response[LIST_INFO] = self.db.get_user_contacts(message[USER])
+            send_message(client_sock, response)
+        # запрос на добавление контакта
+        elif ACTION in message\
+        and message[ACTION] == ADD_CONTACT\
+        and ACCOUNT_NAME in message\
+        and USER in message\
+        and self.names[message[USER]] == client_sock:
+            # import pdb; pdb.set_trace()  # L4 # остановка здесь тоже вызывает TimeoutError у клиента
+            self.db.add_contact(message[USER], message[ACCOUNT_NAME])
+            send_message(client_sock, RESPONSE_200)
+        # запрос на удаление контакта
+        elif ACTION in message\
+        and message[ACTION] == DEL_CONTACT\
+        and ACCOUNT_NAME in message\
+        and USER in message\
+        and self.names[message[USER]] == client_sock:
+            self.db.remove_contact(message[USER], message[ACCOUNT_NAME])
+            send_message(message[USER], RESPONSE_200)
+        # запрос списка пользователей 
+        elif ACTION in message\
+        and message[ACTION] == USERS_LIST\
+        and ACCOUNT_NAME in message\
+        and self.names[message[ACCOUNT_NAME]] == client_sock:
+            response = RESPONSE_202
+            response[LIST_INFO] = [user[0] for user in self.db.users_list()]
+            send_message(client_sock, response)
         # иначе уведомить об ошибке
         else:
             response = RESPONSE_400
@@ -164,58 +218,94 @@ class Server(Thread, metaclass=ServerVerifier):
             send_message(client_sock, response)
             return 
 
-
-def list_available_commands():
-    '''выводит список доступных команд'''
-    print('список supported commands')
-    print('users - list users')
-    print('connected - list active users')
-    print('loghist - история входов пользователя')
-    print('exit завершение работы сервера')
-    print('help список команд')
     
 def main():
     '''получение хоста и порта из командной строки'''    
-    listen_address, listen_port, _ = arg_parser()
+    # import pdb; pdb.set_trace()  # L4
+    config = configparser.ConfigParser()
+    pth = Path().absolute().joinpath('srv.ini')
+    config.read(pth)
+
+    listen_address, listen_port, _ = arg_parser(config['SETTINGS']['listen_address'], config['SETTINGS']['default_port'])
     # создание экземпляра сервер
-    db = ServerStorage()  # database initialize
+    # import pdb; pdb.set_trace()  # L4 added path
+    db = ServerStorage(config['SETTINGS']['database_path'])  # database initialize
     server = Server(listen_address, listen_port, db)
     server.daemon = True
+    # import pdb; pdb.set_trace()  # L4 crete gui
     server.start()  # L3
     
-    list_available_commands()   # print help
-    while True:
-        command = input('Введите команду: ')
-        if command == 'help':
-            list_available_commands()
-        elif command == 'exit':
-            break
-        elif command == 'users':
-            all_users = sorted(db.users_list())
-            if all_users:
-                for user in all_users:
-                    print(
-                        f'пользователь {user[0]} заходил {user[1]} '
-                        f'время установки соединения {user[3]}'
-                        )
-            else:
-                print('No data')
-        elif command == 'loghist':
-            name = input('историю какого пользователя смотреть? Enter дл вывода всех историй')
-            history = sorted(db.login_history(name))
-            if history:
-                for user in sorted(db.login_history(name)):
-                    print(
-                        f'пользователь {user[0]} заходил {user[1]} '
-                        f'время установки соединения {user[3]}'
-                        f'вход с {user[2]}:{user[3]}'
-                        )
-            else:
-                print('no data')
+    # list_available_commands()   # print help
+    server_app = QApplication(sys.argv)
+    main_win = MainWindow()
+    main_win.statusBar().showMessage('Server is on')
+    main_win.active_clients.setModel(gui_create_table(db))
+    main_win.active_clients.resizeColumnsToContents()
+    main_win.active_clients.resizeRowsToContents()
+
+    def list_update():
+        # func to renews connected clients list
+        global connection_is_new
+        if connection_is_new:
+            main_win.active_clients.setModel(gui_create_table(db))
+            main_win.active_clients.resizeColumnsToContents()
+            main_win.active_clients.resizeRowsToContents()
+            with conn_flag_lock:
+                connection_is_new = False
+    def show_stat():
+        # func shows clients' satisctics window
+        # import pdb; pdb.set_trace()
+        global stat_win  # declare as global to access in the outer scope
+        stat_win = HistoryWindow()
+        stat_win.history_table.setModel(gui_create_hist(db))
+        stat_win.history_table.resizeColumnsToContents()
+        stat_win.history_table.resizeRowsToContents()
+        stat_win.show()
+
+    def server_config():
+        # func creates server settings window
+        global config_window
+        config_window = ConfigWindow()
+        config_window.db_path.insert(config['SETTINGS']['database_path'])
+        config_window.db.insert(config['SETTINGS']['database_file'])
+        config_window.port.insert(config['SETTINGS']['default_port'])
+        config_window.ip.insert(config['SETTINGS']['listen_address'])
+        config_window.save_btn.clicked.connect(save_server_config)
+
+    def save_server_config():
+        # import pdb; pdb.set_trace()  # L4 follow thiss function
+        global config_window
+        message = QMessageBox()
+        config['SETTINGS']['database_path'] = config_window.db_path.text()
+        config['SETTINGS']['database_file'] = config_window.db_file.text() 
+        # при приеме этих параметров могут вохникнуть синтаксические ошибки
+        try:
+            port = int(config_window.port.text())
+        except ValueError:
+            message.warning(config_window, 'Error', 'Port must be a number')
         else:
-            print('непонятная команда {command} не поддерживается')
+            config['SETTINGS']['listen_address'] = config_window.ip.text()
+            if 1023 < port < 65536:
+                config['SETTINGS']['default_port'] = str(port)
+                print('port is ', port)
+                with open('srv.ini', 'w') as conf:
+                    config.write(conf)
+                    message.information(config_window, 'OK', 'Settigns are successfully saved')
+            else:
+                message.warning(config_window, 'OK', 'Settigns are not saved')
+    timer = QTimer()
+    timer.timeout.connect(list_update)
+    timer.start(1000)
+
+    main_win.refresh.triggered.connect(list_update)
+    main_win.show_hist.triggered.connect(show_stat)
+    main_win.config.triggered.connect(server_config)
+
+    server_app.exec_()
 
 
 if __name__ == '__main__':
-    # import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()  #L4
     main()
+    # db = ServerStorage('sqlite:///srv_db.db3')
+    # hist_table = gui_create_hist(db) # L4 debug microsecond(s)

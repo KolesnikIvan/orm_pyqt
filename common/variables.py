@@ -27,6 +27,12 @@ ERROR = 'error'
 MESSAGE = 'message'
 MESSAGE_TEXT = 'message_text'
 EXIT = 'exit'
+GET_CONTACTS = 'get_contacts'
+LIST_INFO = 'list_info'
+DEL_CONTACT = 'delete'
+ADD_CONTACT = 'add'
+USERS_LIST = 'known_users_list'
 # dicts-arswers
 RESPONSE_200 = {RESPONSE: 200}
+RESPONSE_202 = {RESPONSE: 202, LIST_INFO: None}
 RESPONSE_400 = {RESPONSE: 400, ERROR: None}

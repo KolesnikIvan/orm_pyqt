@@ -12,7 +12,7 @@ while True:
     if ANSWER == 'q':
         break
     elif ANSWER == 's':
-        # import pdb; pdb.set_trace()
+        import pdb; pdb.set_trace()
         PROCESSES.append(subprocess.Popen('python server.py', creationflags=subprocess.CREATE_NEW_CONSOLE))
 
         for i in range(3):
