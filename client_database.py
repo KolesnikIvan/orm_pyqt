@@ -120,7 +120,7 @@ class ClientDB:
             query = query.filter_by(from_user=from_whom)
         if to_whom:
             query = query.filter_by(to_user=to_whom)
-        return [(history_row.from_user, history_row.to_user, history_row.message, history_row.date)
+        return [(history_row.from_user, history_row.to_user, history_row.message, history_row.dt)
                 for history_row in query.all()]
 
 
