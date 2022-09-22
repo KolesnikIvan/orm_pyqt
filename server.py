@@ -1,4 +1,5 @@
 import sys, os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from pathlib import Path
 import socket
 import json
@@ -12,7 +13,7 @@ from common.variables import (
     LIST_INFO, ADD_CONTACT, DEL_CONTACT, USERS_LIST
     )
 from logs.config_log_server import srv_logger
-from decos import log_function, Log_class
+from common.decos import log_function, Log_class  # L5
 from select import select
 import time
 from metaclasses import ServerVerifier
@@ -60,6 +61,7 @@ class Server(Thread, metaclass=ServerVerifier):
     def run(self):
         ''' Создает сокет на стороне сервера на хосте и порте из командной строки.'''
         # import pdb; pdb.set_trace()
+        global connection_is_new
         self.init_socket()
         while True:
             try:
@@ -90,18 +92,33 @@ class Server(Thread, metaclass=ServerVerifier):
                     try:  # process message to add it in messages list
                         # import pdb; pdb.set_trace()
                         self.proc_msg_fr_client(get_message(sender), sender)
-                    except Exception as e:
-                        pass
+                    # except Exception as e:
+                    #     pass
                         # srv_logger.info(f'клиент {sender} отключился')
                         # self.clients.remove(sender)
+                    except OSError as e:  # L5
+                        # import pdb; pdb.set_trace()  # L5
+                        srv_logger.info(f'client {sender.getpeername()} has disconnected')
+                        for nm in self.names:
+                            if self.names[nm] == sender:
+                                self.db.user_logout(nm)
+                                del self.names[nm]
+                                break
+                        self.clients.remove(sender)
+                        with conn_flag_lock:
+                            connection_is_new = True
 
             for msg in self.msgs_to_send:
+                # import pdb; pdb.set_trace()  # L5
                 try:
                     self.proc_msg_to_client(msg, socks_to_answer)
                 except Exception as e:
                     srv_logger.info(f'утрачена связь с клиентом msg[DESTINATION]')
                     self.clients.remove(self.names[msg[DESTINATION]])
+                    self.db.user_logout(msg[DESTINATION])
                     del self.names[msg[DESTINATION]]
+                    with conn_flag_lock:
+                        connection_is_new = True
             self.msgs_to_send.clear()
 
     @log_function
@@ -158,17 +175,25 @@ class Server(Thread, metaclass=ServerVerifier):
         and SENDER in message\
         and MESSAGE_TEXT in message\
         and self.names[message[SENDER]] == client_sock:
-            self.msgs_to_send.append(message)
-            # import pdb; pdb.set_trace()  # L4
-            self.db.reg_message(
-                message[SENDER],
-                message[DESTINATION]
-            )
+            
+            if message[DESTINATION] in self.names:
+                self.msgs_to_send.append(message)
+                # import pdb; pdb.set_trace()  # L4
+                self.db.reg_message(
+                    message[SENDER],
+                    message[DESTINATION]
+                )
+                send_message(client_sock, RESPONSE_200)
+            else:
+                response = RESPONSE_400
+                response[ERROR] = f'user {message[DESTINATION]} is not registred'
+                send_message(client_sock, response)
             return
         # если сообщение о выходе
         elif ACTION in message\
         and message[ACTION] == EXIT\
-        and ACCOUNT_NAME in message:  # client disconnects
+        and ACCOUNT_NAME in message\
+        and self.names[message[ACCOUNT_NAME]] == client_sock:  # client disconnects
             self.db.user_logout(message[ACCOUNT_NAME]) # L3
             self.clients.remove(self.names[message[ACCOUNT_NAME]])
             self.names[message[ACCOUNT_NAME]].close()
@@ -218,24 +243,41 @@ class Server(Thread, metaclass=ServerVerifier):
             send_message(client_sock, response)
             return 
 
-    
+def server_config_load():
+    # downloads server configuration from a server.ini file
+    # import pdb; pdb.set_trace()  # L5
+    config = configparser.ConfigParser()
+    config_path = os.path.dirname(os.path.realpath(__file__))
+    # config.read(f"{config_path}/{'server.ini'}")
+    config.read(os.path.join(config_path, 'server.ini'))
+    if 'SETTINGS' in config:
+        return config
+    else:
+        config.add_section('SETTINGS')
+        config.set('SETTINGS', 'Default_port', str(DEFAULT_PORT))
+        config.set('SETTINGS', 'Listen_Address', '')
+        config.set('SETTINGS', 'Database_path', '')
+        config.set('SETTINGS', 'Database_file', 'srv_db.db3')
+        return config
+
 def main():
     '''получение хоста и порта из командной строки'''    
     # import pdb; pdb.set_trace()  # L4
-    config = configparser.ConfigParser()
-    pth = Path().absolute().joinpath('srv.ini')
-    config.read(pth)
+    config = server_config_load()
 
     listen_address, listen_port, _ = arg_parser(config['SETTINGS']['listen_address'], config['SETTINGS']['default_port'])
     # создание экземпляра сервер
     # import pdb; pdb.set_trace()  # L4 added path
-    db = ServerStorage(config['SETTINGS']['database_path'])  # database initialize
+    # db = ServerStorage(config['SETTINGS']['database_path'])  # database initialize
+    db = ServerStorage(os.path.join(config['SETTINGS']['database_path'],
+                                    config['SETTINGS']['database_file']))  # database initialize
     server = Server(listen_address, listen_port, db)
     server.daemon = True
     # import pdb; pdb.set_trace()  # L4 crete gui
     server.start()  # L3
     
     # list_available_commands()   # print help
+    # create server gui
     server_app = QApplication(sys.argv)
     main_win = MainWindow()
     main_win.statusBar().showMessage('Server is on')
@@ -252,6 +294,7 @@ def main():
             main_win.active_clients.resizeRowsToContents()
             with conn_flag_lock:
                 connection_is_new = False
+    
     def show_stat():
         # func shows clients' satisctics window
         # import pdb; pdb.set_trace()
@@ -262,7 +305,7 @@ def main():
         stat_win.history_table.resizeRowsToContents()
         stat_win.show()
 
-    def server_config():
+    def server_config_win(): # L4
         # func creates server settings window
         global config_window
         config_window = ConfigWindow()
@@ -270,9 +313,9 @@ def main():
         config_window.db.insert(config['SETTINGS']['database_file'])
         config_window.port.insert(config['SETTINGS']['default_port'])
         config_window.ip.insert(config['SETTINGS']['listen_address'])
-        config_window.save_btn.clicked.connect(save_server_config)
+        config_window.save_btn.clicked.connect(server_config_save)
 
-    def save_server_config():
+    def server_config_save():
         # import pdb; pdb.set_trace()  # L4 follow thiss function
         global config_window
         message = QMessageBox()
@@ -299,13 +342,13 @@ def main():
 
     main_win.refresh.triggered.connect(list_update)
     main_win.show_hist.triggered.connect(show_stat)
-    main_win.config.triggered.connect(server_config)
+    main_win.config.triggered.connect(server_config_win)
 
-    server_app.exec_()
+    server_app.exec_()  # launch gui in a main thread
 
 
 if __name__ == '__main__':
-    # import pdb; pdb.set_trace()  #L4
+    import pdb; pdb.set_trace()  #L4
     main()
     # db = ServerStorage('sqlite:///srv_db.db3')
     # hist_table = gui_create_hist(db) # L4 debug microsecond(s)

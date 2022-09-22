@@ -4,6 +4,7 @@ import configparser
 from pathlib import Path
 # sys.path.append(Path().absolute())
 sys.path.append(os.getcwd())
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from common.variables import (
     MAX_PACKAGE_LEN,
     ENCODING,
@@ -11,11 +12,11 @@ from common.variables import (
     DEFAULT_PORT,
     DEFAULT_SRV_IP,
 )
-from decos import Log_class, log_function
+from common.decos import Log_class, log_function
 from logs.config_log_client import cl_logger
 from logs.config_log_server import srv_logger
 import argparse
-from errors import IncorrectDataReceived, NonDictInputError
+from common.errors import IncorrectDataReceived, NonDictInputError
 
 
 if 'server' in sys.argv[0]:
@@ -60,7 +61,7 @@ def send_message(sock, message: dict):
 @Log_class(logger)
 def arg_parser(def_ip: str = None, def_port: int = None):
     '''из аргументо CLI получаем адрес, порт и наименование; наименование идентифицирует клиента'''
-    # import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()  # L5
     config = configparser.ConfigParser()
     pth = Path().absolute().parent.joinpath('srv.ini')
     config.read(pth) 

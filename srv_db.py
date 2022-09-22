@@ -1,5 +1,5 @@
 # import pdb;pdb.set_trace()
-import sys
+import sys, os
 try:
     sys.path.append("C:\learn_python\pyqt_db_orm\dbqtvenv\Scripts\python.exe")
     sys.path.append("C:\learn_python\pyqt_db_orm\dbqtvenv\Lib\site-packages")
@@ -47,9 +47,9 @@ class ServerStorage:
 
     class UsersHistory:
         '''класс таблица истории действий пользователей'''
-        def __init__(self, user):
+        def __init__(self, user_id):
             self.id = None
-            self.user_name = user
+            self.user_id = user_id
             self.sent = 0
             self.rcvd = 0
 
@@ -61,7 +61,7 @@ class ServerStorage:
         # connect_args управляет отслеживанием потоков, подключающихся к базе; по умолчанию база доступна лишь для одного какого-то потока
         # import pdb; pdb.set_trace()  # L4 path new argument
         self.engine = create_engine(
-            path,  # DB_URL,
+            f'sqlite:///{path}',  # DB_URL,
             echo=False,
             pool_recycle=7200,
             connect_args={'check_same_thread':False})
@@ -115,6 +115,7 @@ class ServerStorage:
     def user_login(self, user_name, ip_addr, port):
         # фнукция обработки входа пользователя (записи в базу)
         # print(user_name, ip_addr, port)
+        # import pdb; pdb.set_trace()  # L5
         query_name = self.session.query(self.UsersAll).filter_by(user_name=user_name)
         if query_name.count():
             # если пользователь уже в базе, обновить время его входа
@@ -125,6 +126,8 @@ class ServerStorage:
             user = self.UsersAll(user_name)
             self.session.add(user)
             self.session.commit()
+            user_in_history = self.UsersHistory(user.id)
+            self.session.add(user_in_history)
 
         # внесение подключившегося в базу активных
         active_user = self.UsersActive(user.id, ip_addr, port, datetime.now())
@@ -178,16 +181,16 @@ class ServerStorage:
         # import pdb; pdb.set_trace()
         sender = self.session.query(self.UsersAll).filter_by(user_name=sender).first().id
         receiver = self.session.query(self.UsersAll).filter_by(user_name=dest).first().id
-        sender_rw = self.session.query(self.UsersHistory).filter_by(id=sender)
+        sender_rw = self.session.query(self.UsersHistory).filter_by(user_id=sender).first()
         sender_rw.sent += 1
-        rcvd_rw = self.session.query(self.UsersHistory).filter_byt(id=receiver).first()
-        rcvd_rw += 1
+        rcvd_rw = self.session.query(self.UsersHistory).filter_by(user_id=receiver).first()
+        rcvd_rw.sent += 1
 
         self.session.commit()
 
     def add_contact(self, sender, contact):
         # L4 add contact for user
-        import pdb; pdb.set_trace()
+        # import pdb; pdb.set_trace()
         sender = self.session.query(self.UsersAll).filter_by(user_name=sender).first()
         contact = self.session.query(self.UsersAll).filter_by(user_name=contact).first()
 
@@ -237,7 +240,8 @@ class ServerStorage:
 # debug
 if __name__ == '__main__':
     import pdb; pdb.set_trace()
-    test_base = ServerStorage()
+    path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'srv_db.db3')
+    test_base = ServerStorage(path)
     test_base.user_login('client_1', '192.168.1.4', 8080)
     test_base.user_login('client_2', '192.168.1.5', 7777)
     print('active users')

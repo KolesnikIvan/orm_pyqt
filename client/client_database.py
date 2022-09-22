@@ -1,9 +1,15 @@
+# import pdb; pdb.set_trace()
 import sys, os
 try:
     sys.path.append("C:\learn_python\pyqt_db_orm\dbqtvenv\Scripts\python.exe")
     sys.path.append("C:\learn_python\pyqt_db_orm\dbqtvenv\Lib\site-packages")
 except Exception:
     pass
+sys.path.append(r'..\\')
+from pathlib import Path
+root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(root_dir)
+sys.path.append(Path(__file__).absolute().parent.parent)
 from sqlalchemy import create_engine, Table, Column, Integer, String, Text, MetaData, DateTime
 from sqlalchemy.orm import mapper, sessionmaker
 from common.variables import *
@@ -22,7 +28,7 @@ class ClientDB:
             self.from_user = sender
             self.to_user = receiver
             self.message = message
-            self.dt = datetime.now()
+            self.date = datetime.now()
 
     class Contacts:
         def __init__(self, contact):
@@ -31,7 +37,10 @@ class ClientDB:
 
     def __init__(self, client_name):
         # each client has its' base
-        self.db_engine = create_engine(f'sqlite:///client_{client_name}.db3',
+        # import pdb; pdb.set_trace()  # L5
+        pth = os.path.dirname(os.path.realpath(__file__))
+        base_file_name = f'client_{client_name}.db3'
+        self.db_engine = create_engine(f'sqlite:///{os.path.join(pth, base_file_name)}',
                                         echo=False,
                                         pool_recycle=7200,
                                         connect_args={'check_same_thread': False})
@@ -48,7 +57,7 @@ class ClientDB:
             Column('message', Text),
             Column('date', DateTime))
 
-        cont_table = Table('contacts', self.meta,
+        cont_table = Table('contacts_table', self.meta,
             Column('id', Integer, primary_key=True),
             Column('contact_name', String, unique=True))
         
@@ -59,7 +68,7 @@ class ClientDB:
 
         Session = sessionmaker(bind=self.db_engine)
         self.session = Session()
-        # очистить контакты, чтобы при запуске получит их с сервера чтобы 
+        # очистить контакты, чтобы при запуске получить их с сервера чтобы 
         self.session.query(self.Contacts).delete()
         self.session.commit()
 
@@ -75,7 +84,6 @@ class ClientDB:
         # delte contact
         self.session.query(self.Contacts).filter_by(contact_name=contact_name).delete()
         self.session.commit()
-
     
     def add_users(self, user_list):
         # adds known user
@@ -96,7 +104,7 @@ class ClientDB:
         return [contact[0] for contact in self.session.query(self.Contacts.contact_name).all()]
 
     def get_users(self):
-        # get users
+        # get known users
         return [user[0] for user in self.session.query(self.KnownUsers.user_name).all()]
 
     def is_known(self, receiver):
@@ -113,19 +121,19 @@ class ClientDB:
         else:
             return False
 
-    def get_messages_list(self, from_whom=None, to_whom=None):
+    def get_messages_hist(self, user_name):
         # returns communication history
-        query = self.session.query(self.MsgHist)
-        if from_whom:
-            query = query.filter_by(from_user=from_whom)
-        if to_whom:
-            query = query.filter_by(to_user=to_whom)
-        return [(history_row.from_user, history_row.to_user, history_row.message, history_row.date)
+        # import pdb; pdb.set_trace()  # L5
+        query = self.session.query(self.MsgHist).filter_by(from_user=user_name)
+        return [(history_row.from_user,\
+                history_row.to_user,\
+                history_row.message,\
+                history_row.date)
                 for history_row in query.all()]
 
 
 if __name__ == '__main__':
-    # import pdb; pdb.set_trace()
+    import pdb; pdb.set_trace()  # L5
     test_db = ClientDB(f'tester_{datetime.now().strftime("%S")}')
     for u in ['u1', 'u3', 'u7']:
         test_db.add_contact(u)
@@ -137,7 +145,7 @@ if __name__ == '__main__':
     print(test_db.get_users())
     print(test_db.is_known('t1'))
     print(test_db.is_known('t10'))
-    print(test_db.get_messages_list(to_whom='t1'))
-    print(test_db.get_messages_list(from_whom='t1'))
+    print(test_db.get_messages_hist(user_name='t1'))
+    print(test_db.get_messages_hist(user_name='t1'))
     print(test_db.del_contact('t5'))
     print(test_db.get_contacts())
