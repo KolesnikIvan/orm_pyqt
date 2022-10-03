@@ -63,19 +63,21 @@ def arg_parser(def_ip: str = None, def_port: int = None):
     '''из аргументо CLI получаем адрес, порт и наименование; наименование идентифицирует клиента'''
     # import pdb; pdb.set_trace()  # L5
     config = configparser.ConfigParser()
-    pth = Path().absolute().parent.joinpath('srv.ini')
+    pth = Path().absolute().parent.joinpath('server', 'srv.ini')
     config.read(pth) 
     parser = argparse.ArgumentParser()
     parser.add_argument('-a', '--addr', dest='ip', default=def_ip if def_ip is not None else DEFAULT_SRV_IP, nargs='?', type=str)
     parser.add_argument('-p', '--port', dest='port', default=def_port if def_port is not None else DEFAULT_PORT, nargs='?', type=int)
-    parser.add_argument('-n', '--name', dest='name', default=None, nargs='?', type=str, required=False)
+    parser.add_argument('-n', '--name', dest='name', default='user', nargs='?', type=str, required=False)
+    parser.add_argument('-s', '--password', dest='pwd', default='1234', nargs='?', type=str, required=False)
+    parser.add_argument('-i', '--gui', dest='gui', help='show gui', action='store_true', default=True)
     args = parser.parse_args(sys.argv[1:])
     # import pdb; pdb.set_trace()
     if not 1023 < args.port < 65536:
         cl_logger.critical(f'Указан заведомо неверный номер порта {args.port}. Допустимы номера портов в диапазоне [1024; 65535].')
         sys.exit(1)
 
-    return args.ip, args.port, args.name
+    return args.ip, args.port, args.name, args.pwd, args.gui
 
     
 if __name__ == '__main__':

@@ -130,3 +130,7 @@ dmypy.json
 .pyre/
 
 srv.log.*
+*копия
+* — копия
+*.key
+*key.packaging

@@ -3,9 +3,13 @@ import sys
 import time
 import json
 from threading import Thread, Lock
-from PyQt5.QtCore import pyqtSignal, QObject
-from logs.config_log_client import cl_logger
+import hashlib
+import hmac
+import binascii
 
+from PyQt5.QtCore import pyqtSignal, QObject
+
+from logs.config_log_client import cl_logger
 sys.path.append('../')
 from common.utils import *
 from common.variables import *
@@ -16,14 +20,17 @@ sock_lock = Lock()
 class ClientThread(Thread, QObject):
     new_message = pyqtSignal(str)
     connection_lost = pyqtSignal()
+    message_205 = pyqtSignal()
 
-    def __init__(self, port, ip_addr, database, user_name):
+    def __init__(self, port, ip_addr, database, user_name, pwd, key):
         Thread.__init__(self)
         QObject.__init__(self)
 
         self.db = database
         self.user_name = user_name
+        self.pwd = pwd
         self.sock = None
+        self.key = key
         self.connection_init(ip_addr, port)
 
         try:
@@ -52,6 +59,7 @@ class ClientThread(Thread, QObject):
                 pass
             else:
                 connected = True
+                cl_logger.info('connection established')
                 break
             time.sleep(1)
 
@@ -59,31 +67,48 @@ class ClientThread(Thread, QObject):
             cl_logger.error('could not establish a connetction')
             raise ServerError('could not establish a connetction')
         
-        else:
-            cl_logger.info('client has connected to the server {ip_addr}:{port_num}')
-            # if connected, send presence message and get answer
-            try:
-                # import pdb; pdb.set_trace()  # L5
-                with sock_lock:
-                    send_message(self.sock, self.create_presence_message())
-                    self.process_server_ans(get_message(self.sock))
-            except (OSError, json.JSONDecodeError) as e:
-                cl_logger.error('lost connection', e)
-                raise ServerError('lost connection')
+        else:  # if  connected, authorize
+            pwd_b = self.pwd.encode('utf-8')
+            salt = self.user_name.lower().encode('utf-8')
+            pwd_hash = hashlib.pbkdf2_hmac('sha512', pwd_b, salt, 10000)
+            pwd_hash_str = binascii.hexlify(pwd_hash)
+            
+            cl_logger.info(f'pwdw hash is {pwd_hash_str}')
 
-            else:
-                cl_logger.info(f'client {self.user_name} successfully connected to a server')
-
-    def create_presence_message(self):
-        # generate greeting message to server
-        out = {
-            ACTION: PRESENCE,
-            TIME: time.ctime(),
-            USER: {ACCOUNT_NAME: self.user_name}
-        }
-        cl_logger.info(f'built {PRESENCE} message {out}')
-        return out
-
+            pubkey = self.key.publickey().export_key().decode('ascii')
+            
+            # authorization__L6
+            # import pdb; pdb.set_trace()  # L5
+            with sock_lock:
+                presence = {
+                    ACTION: PRESENCE,
+                    TIME: time.time(),
+                    USER:{
+                        ACCOUNT_NAME: self.user_name,
+                        PUBLIC_KEY: pubkey
+                    }
+                }
+                cl_logger.info(f'presence message {presence}')
+                try:
+                    # import pdb; pdb.set_trace()
+                    send_message(self.sock, presence)
+                    ans = get_message(self.sock)
+                    cl_logger.info(f'server response {ans}')
+                    if RESPONSE in ans:
+                        if ans[RESPONSE] == 400:
+                            raise ServerError(ans[ERROR])
+                        elif ans[RESPONSE] == 511:
+                            ans_data = ans[DATA]
+                            hash = hmac.new(pwd_hash_str, ans_data.encode('utf-8'), 'MD5')
+                            digest = hash.digest()
+                            my_ans = RESPONSE_511
+                            my_ans[DATA] = binascii.b2a_base64(digest).decode('utf-8')
+                            send_message(self.sock, my_ans)
+                            self.process_server_ans(get_message(self.sock))
+                except (OSError, json.JSONDecodeError) as e:
+                    cl_logger.error('lost connection', e)
+                    raise ServerError('lost connection')
+   
     def process_server_ans(self, message):
         # processes a message from a server
         logger.debug(f'parsing message {message}')
@@ -94,6 +119,10 @@ class ClientThread(Thread, QObject):
                 return
             elif message[RESPONSE] == 400:
                 raise ServerError(message[ERROR])
+            elif message[RESPONSE] == 205:
+                self.update_users_list()
+                self.update_contacts_list()
+                self.message_205.emit()
             else:
                 logger.debug(f'got unknown response code {message[RESPONSE]}')
 
@@ -106,11 +135,12 @@ class ClientThread(Thread, QObject):
                 and message[DESTINATION] == self.user_name:
             cl_logger.info(f'got message from {message[SENDER]}:'
                          f'{message[MESSAGE_TEXT]}')
-            self.db.save_message(message[SENDER], 'in', message[MESSAGE_TEXT])
+            # self.db.save_message(message[SENDER], 'in', message[MESSAGE_TEXT])
             self.new_message.emit(message[SENDER])
 
     def update_contacts_list(self):
         # updates contacts list of server
+        self.db.clear_contacts()
         cl_logger.info(f"{self.user_name}'s contacts list requested")
         req = {
             ACTION: GET_CONTACTS,
@@ -145,6 +175,22 @@ class ClientThread(Thread, QObject):
             self.db.add_users(ans[LIST_INFO])
         else:
             cl_logger.error('could not update users list')
+
+    def key_request(self, user):
+        '''requests users public key for user'''
+        cl_logger.info(f"{user}'s public key request")
+        req = {
+            ACTION: KEY_REQ,
+            TIME: time.time(),
+            ACCOUNT_NAME: user
+        }
+        with sock_lock:
+            send_message(self.sock, req)
+            ans = get_message(self.sock)
+        if RESPONSE in ans and ans[RESPONSE] == 511:
+            return ans[DATA]
+        else:
+            cl_logger.error(f"could not get {user}'s key")
 
     def add_contact_notification(self, contact_name):
         # notes the server the contact's been added
@@ -207,7 +253,8 @@ class ClientThread(Thread, QObject):
     def run(self):
         cl_logger.info('client message receiver process has been launched')
         while self.running:
-            time.sleep(1)
+            time.sleep(1)  # await sendind
+            message = None
             with sock_lock:
                 try:
                     self.sock.settimeout(0.5)
@@ -221,8 +268,11 @@ class ClientThread(Thread, QObject):
                     cl_logger.info('lost connection')
                     self.running = False
                     self.connection_lost.emit()
-                else:  # if got message
-                    cl_logger.info(f'got message {msg}')
-                    self.process_server_ans(msg)
                 finally:
                     self.sock.settimeout(5)
+                
+            # if got message
+            if message:
+                cl_logger.info(f'got message {msg}')
+                self.process_server_ans(msg)
+                

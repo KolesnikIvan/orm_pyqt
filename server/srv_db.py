@@ -1,10 +1,12 @@
 # import pdb;pdb.set_trace()
-import sys, os
-try:
-    sys.path.append("C:\learn_python\pyqt_db_orm\dbqtvenv\Scripts\python.exe")
-    sys.path.append("C:\learn_python\pyqt_db_orm\dbqtvenv\Lib\site-packages")
-except Exception:
-    pass
+import sys
+import os
+# try:
+#     sys.path.append("C:\learn_python\pyqt_db_orm\dbqtvenv\Scripts\python.exe")
+#     sys.path.append("C:\learn_python\pyqt_db_orm\dbqtvenv\Lib\site-packages")
+# except Exception:
+#     pass
+sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__file__)), '..'))
 from sqlalchemy import *  # create_engine, Table, Column, Integer, String, MetaData, ForeignKey, DateTime
 from sqlalchemy.orm import mapper, sessionmaker
 from common.variables import DB_URL
@@ -14,10 +16,12 @@ class ServerStorage:
     '''класс представляет сервеную базу данных'''
     class UsersAll:
         '''класс таблица пользователей'''
-        def __init__(self, user_name):
+        def __init__(self, user_name, pwd_hash):
             self.user_name = user_name
             self.last_login = datetime.now()
             self.id = None
+            self.pwd_hash = pwd_hash
+            self.pubkey = None
 
     class UsersActive:
         '''класс таблица активных ползовтелей'''
@@ -31,12 +35,12 @@ class ServerStorage:
     class LoginHistory:
         '''класс история посещений чата пользователями'''
         def __init__(self, user_id, user_name, logged_at, ip, port):
+            self.id = None
             self.user_id = user_id
             self.user_name = user_name
-            self.logged_at = logged_at
             self.ip = ip
+            self.logged_at = logged_at
             self.port = port
-            self.id = None
 
     class UsersContacts:
         '''класс таблица контактов пользователей'''
@@ -69,10 +73,12 @@ class ServerStorage:
         self.meta = MetaData()  #MetaData object
         
         users_table = Table('Users_All', self.meta,
-            Column('id', Integer, primary_key=True),
             Column('user_name', String, unique=True),
-            Column('last_login', DateTime),)                                            
-
+            Column('last_login', DateTime),
+            Column('id', Integer, primary_key=True),
+            Column('pwd_hash', String),
+            Column('pubkey', Text),)                                            
+        
         users_active_table = Table('Users_Active', self.meta,
             Column('id', Integer, primary_key=True),
             Column('user_id', ForeignKey('Users_All.id'), unique=True),
@@ -99,6 +105,7 @@ class ServerStorage:
             Column('sent', Integer),
             Column('rcvd', Integer))
 
+        # import pdb; pdb.set_trace()
         self.meta.create_all(self.engine)   # creation
         mapper(self.UsersAll, users_table)  # mapping
         mapper(self.UsersActive, users_active_table)
@@ -107,12 +114,12 @@ class ServerStorage:
         mapper(self.UsersHistory, users_history_table)
 
         Session = sessionmaker(bind=self.engine)
-        self.session = Session()            # session's creation
+        self.session = Session()    # session's creation
 
         self.session.query(self.UsersActive).delete()
-        self.session.commit()               # clear active users' table by the new launch
+        self.session.commit()       # clear active users' table by the new launch
 
-    def user_login(self, user_name, ip_addr, port):
+    def user_login(self, user_name, ip_addr, port, key):
         # фнукция обработки входа пользователя (записи в базу)
         # print(user_name, ip_addr, port)
         # import pdb; pdb.set_trace()  # L5
@@ -121,23 +128,55 @@ class ServerStorage:
             # если пользователь уже в базе, обновить время его входа
             user = query_name.first()
             user.last_login = datetime.now()
+            if user.pubkey != key:
+                user.pubkey = key
         else:
-            # внесение нового с получением id
-            user = self.UsersAll(user_name)
-            self.session.add(user)
-            self.session.commit()
-            user_in_history = self.UsersHistory(user.id)
-            self.session.add(user_in_history)
-
-        # внесение подключившегося в базу активных
-        active_user = self.UsersActive(user.id, ip_addr, port, datetime.now())
-        self.session.add(active_user)
-
-        # фиксация подключения в истории подключений
-        hist_fact = self.LoginHistory(user.id, user_name, datetime.now(), ip_addr, port)
-        self.session.add(hist_fact)
-
+            raise ValueError("user isn't registred")
+        # record new active user
+        new_act_user = self.UsersActive(user.id, ip_addr, port, datetime.now())
+        self.session.add(new_act_user)
+        user_in_history = self.LoginHistory(user.id, new_act_user.user_id, datetime.now(), ip_addr, port)
+        self.session.add(user_in_history)
+        self.session.add(new_act_user)
         self.session.commit()
+
+    def add_user(self, user_name, pwd_hash):
+        '''
+        registers user; takes name and hash and writes them into table
+        '''
+        # import pdb; pdb.set_trace()
+        user_row = self.UsersAll(user_name, pwd_hash)
+        self.session.add(user_row)
+        self.session.commit()
+        history_row  = self.UsersHistory(user_row.id)
+        self.session.add(history_row)
+        self.session.commit()
+    
+    def remove_user(self, name):
+        """Deletes user from the base"""
+        user = self.session.query(self.UsersAll).filter_by(name=name).first()
+        self.session.query(self.UsersActive).filter_by(user=user.id).delete()
+        self.session.query(self.LoginHistory).filter_by(name=user.id).delete()
+        self.session.query(self.UsersContacts).filter_by(user=user.id).delete()
+        self.session.query(
+            self.UsersContacts).filter_by(
+            contact=user.id).delete()
+        self.session.query(self.UsersHistory).filter_by(user=user.id).delete()
+        self.session.query(self.UsersAll).filter_by(name=name).delete()
+        self.session.commit()
+
+    def get_hash_fr_db(self, name):
+        '''gets user's password hash'''
+        user = self.session.query(self.UsersAll).filter_by(user_name=name).first()
+        return user.pwd_hash
+
+    def user_is_in_base(self, name):
+        '''checks if user is in base'''
+        # import pdb; pdb.set_trace()
+        if self.session.query(self.UsersAll).filter_by(user_name=name).count():
+            return True
+        else:
+            return False
 
     def user_logout(self, user_name):
         # функция обработки отключения пользователя
@@ -146,8 +185,47 @@ class ServerStorage:
 
         self.session.commit()
 
+    def reg_message(self, sender, dest):
+        # L4 register message in the db
+        # import pdb; pdb.set_trace()
+        sender = self.session.query(self.UsersAll).filter_by(user_name=sender).first().id
+        receiver = self.session.query(self.UsersAll).filter_by(user_name=dest).first().id
+        sender_rw = self.session.query(self.UsersHistory).filter_by(user_id=sender).first()
+        sender_rw.sent += 1
+        rcvd_rw = self.session.query(self.UsersHistory).filter_by(user_id=receiver).first()
+        rcvd_rw.sent += 1
+
+        self.session.commit()
+        
+    def add_contact(self, sender, contact):
+        ''' L4 add contact for user '''
+        # import pdb; pdb.set_trace()
+        sender = self.session.query(self.UsersAll).filter_by(user_name=sender).first()
+        contact = self.session.query(self.UsersAll).filter_by(user_name=contact).first()
+
+        if not contact or self.session.query(self.UsersContacts).filter_by(user_id=sender.id, contact_id=contact.id).count():
+            return
+        else:
+            contact_row = self.UsersContacts(sender.id, contact.id)
+            self.session.add(contact_row)
+            self.session.commit()
+    
+    def remove_contact(self, user_name, contact_name):
+        ''' L4 delete contact from dbase '''
+        # import pdb; pdb.set_trace()
+        user = self.session.query(self.UsersAll).filter_by(user_name=user_name).first()
+        contact = self.session.query(self.UsersAll).filter_by(user_name=contact_name).first()
+        if not contact:
+            return
+        else:
+            self.session.query(self.UsersContacts).filter(
+                    self.UsersContacts.user_id==user.id,
+                    self.UsersContacts.contact_id==contact.id
+            ).delete()
+            self.session.commit()
+
     def users_list(self):
-        # выборка пользователей и их последних входов в чат
+        ''' выборка пользователей и их последних входов в чат '''
         query =self.session.query(
             self.UsersAll.user_name,
             self.UsersAll.last_login,
@@ -176,47 +254,6 @@ class ServerStorage:
             query = query.filter(self.UsersAll.user_name==user_name)
         return query.all()
 
-    def reg_message(self, sender, dest):
-        # L4 register message in the db
-        # import pdb; pdb.set_trace()
-        sender = self.session.query(self.UsersAll).filter_by(user_name=sender).first().id
-        receiver = self.session.query(self.UsersAll).filter_by(user_name=dest).first().id
-        sender_rw = self.session.query(self.UsersHistory).filter_by(user_id=sender).first()
-        sender_rw.sent += 1
-        rcvd_rw = self.session.query(self.UsersHistory).filter_by(user_id=receiver).first()
-        rcvd_rw.sent += 1
-
-        self.session.commit()
-
-    def add_contact(self, sender, contact):
-        # L4 add contact for user
-        # import pdb; pdb.set_trace()
-        sender = self.session.query(self.UsersAll).filter_by(user_name=sender).first()
-        contact = self.session.query(self.UsersAll).filter_by(user_name=contact).first()
-
-        if not contact or self.session.query(self.UsersContacts).filter_by(user_id=sender.id, contact_id=contact.id).count():
-            return
-        else:
-            contact_row = self.UsersContacts(sender.id, contact.id)
-            self.session.add(contact_row)
-            self.session.commit()
-
-    def remove_contact(self, user_name, contact_name):
-        # L4 delete contact from dbase
-        # import pdb; pdb.set_trace()
-        user = self.session.query(self.UsersAll).filter_by(user_name=user_name).first()
-        contact = self.session.query(self.UsersAll).filter_by(user_name=contact_name).first()
-        if not contact:
-            return
-        else:
-            print(
-                self.session.query(self.UsersContacts).filter(
-                    self.UsersContacts.user_id==user.id,
-                    self.UsersContacts.contact_id==contact.id
-                ).delete()
-            )
-            self.session.commit()
-
     def get_user_contacts(self, user_name):
         # L4 return contacts of the selected user
         # import pdb; pdb.set_trace()
@@ -242,17 +279,26 @@ if __name__ == '__main__':
     import pdb; pdb.set_trace()
     path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'srv_db.db3')
     test_base = ServerStorage(path)
-    test_base.user_login('client_1', '192.168.1.4', 8080)
-    test_base.user_login('client_2', '192.168.1.5', 7777)
+    with open("C:\learn_python\pyqt_db_orm\orm_pyqt\server\test1.key", 'r') as kf:
+        key = kf.read()
+    test_base.user_login('client_1', '192.168.1.4', 8080, key)
+    test_base.user_login('client_2', '192.168.1.5', 7777, key)
     print('active users')
     print(test_base.active_users_list())
 
     test_base.user_logout('client_1')
     print('active users after logout')
     print(test_base.active_users_list())
-
+    test_base.user_logout('McG')
+    print(test_base.login_history('foo'))
+    test_base.add_contact('testerT', 'testttt121')
+    test_base.add_contact('test12', 'testerT')
+    test_base.add_contact('test21', 'test76')
+    test_base.remove_contact('test1', 'test2')
     print('history')
     print(test_base.login_history('client_1'))
-
+    test_base.reg_message('test1', 'test2')
     print('all users')
     print(test_base.users_list())
+    print(test_base.message_history())
+    
