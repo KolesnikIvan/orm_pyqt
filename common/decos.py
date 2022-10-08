@@ -26,7 +26,9 @@ else:
 
 
 def log_function(func):
-    # decorator-function
+    """
+    decorator-function
+    :param: func"""
     # import pdb; pdb.set_trace()
     def log_fname(*args, **kwargs):
         res = func(*args, **kwargs)
@@ -58,9 +60,10 @@ class Log_class:
 
 
 def need_login(func):
-    '''
+    """
     deco checking the client is authenticated
-    '''
+    :params: func
+    """
     def checker(*args, **kwargs):
         from server.core import MessageProcessor
         from common.variables import ACTION, PRESENCE

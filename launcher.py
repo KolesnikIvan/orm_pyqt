@@ -17,9 +17,12 @@ def main():
             import pdb; pdb.set_trace()
             try:
                 PROCESSES.append(subprocess.Popen('python server.py', creationflags=subprocess.CREATE_NEW_CONSOLE))
+                input()
             except Exception as e:
                 print(e)
                 pass
+            finally:
+                input()
         elif action == 'k':
             print('check there is eonugh users registered on server; ', 'first launch causes keys generation')
             clients_num = 3  # int(input('insert a number of clients to start '))

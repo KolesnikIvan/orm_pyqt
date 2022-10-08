@@ -18,10 +18,11 @@ import configparser
 
 
 class MessageProcessor(Thread):
-    '''
+    """
     основной класс сервера; принимает соединения, словари-пакеты;
+
     работает, как отдельный поток
-    '''
+    """
     port = Port()
 
     def __init__(self, listen_address, listen_port, database):
@@ -38,7 +39,7 @@ class MessageProcessor(Thread):
         super().__init__()
 
     def run(self):
-        ''' Создает сокет на стороне сервера на хосте и порте из командной строки.'''
+        """Создает сокет на стороне сервера на хосте и порте из командной строки."""
         # import pdb; pdb.set_trace()
         self.init_socket()
         while self.running:
@@ -102,10 +103,12 @@ class MessageProcessor(Thread):
             # self.msgs_to_send.clear()
     
     def rm_client(self, client_sock):
-        '''
+        """
         method processes disconnected client
         deletes client from lists and from base
-        '''
+        :param: client_sock
+        :return: nothing
+        """
         srv_logger.info(f'client {client_sock.getpeername()} has disconnected')
         for nm in self.names:
             if self.names[nm] == client_sock:
@@ -126,10 +129,12 @@ class MessageProcessor(Thread):
 
     @log_function
     def proc_msg_to_client(self, message):
-        '''
+        """
         отправляет сообщение в соответствии с его DESTNATION
         принимает сообщение, список имен клиентов, список сокетов ожидающих сообщения
-        '''
+        :param: message
+        :return: nothing
+        """
         if message[DESTINATION] in self.names\
                 and self.names[message[DESTINATION]] in self.listen_socks:
             try:
@@ -149,7 +154,12 @@ class MessageProcessor(Thread):
     # @log_function
     @need_login
     def proc_msg_fr_client(self, message, client_sock):
-        '''Обработка сообщения от клиента'''
+        """
+        Обработка сообщения от клиента
+
+        :param: message
+        :param: client_cosk - client's socket
+        """
         srv_logger.info(f'разбор сообщения {message} от клиента {client_sock}')
         # import pdb; pdb.set_trace()  # L4  из-за этой остановки клиенты отключаются по таймауту, остановка в начале процедуры обработки сообщений не позволяет им подключиться
         if ACTION in message\
@@ -261,7 +271,12 @@ class MessageProcessor(Thread):
                 self.rm_client(client_sock)
 
     def autorize_user(self, message, sock):
-        '''handels user authorization'''
+        """
+        handels user authorization
+        
+        :param: message message authorize
+        :param: sock - socket to authorize
+        """
         srv_logger.info(f'auth process for {message[USER]} is started')
         if message[USER][ACCOUNT_NAME] in self.names.keys():
             response == RESPONSE_400
@@ -328,7 +343,11 @@ class MessageProcessor(Thread):
                 sock.close()
 
     def service_update_lists(self):
-        '''sends sevice message_205 to the clients'''
+        """
+        sends sevice message_205 to the clients
+        :returns: nothing
+        """
+
         for client in self.names:
             try:
                 send_message(self.names[client], RESPONSE_205)
