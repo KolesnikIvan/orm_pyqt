@@ -6,11 +6,9 @@ orm_pyqt
 
    client
    clnt
-   .. client — копия
    common
    launcher
    logs
    server
-   srv
-   .. server — копия
+   srvr
    unit_tests

@@ -1,10 +1,10 @@
-.. PyQt_ORM_geekbrains_course documentation master file, created by
-   sphinx-quickstart on Sat Oct  8 22:14:21 2022.
+.. Geelbrains_PyQt_OR documentation master file, created by
+   sphinx-quickstart on Sun Oct  9 14:06:42 2022.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to PyQt_ORM_geekbrains_course's documentation!
-======================================================
+Welcome to Geelbrains_PyQt_OR's documentation!
+==============================================
 
 .. toctree::
    :maxdepth: 2
